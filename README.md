@@ -13,6 +13,7 @@
 
 
 **2. Class Diagram for Business Logic Layer:** 
+Show the main business entities, the data they contain, and how they relate to each other.
 
 
 **3. Sequence Diagrams:**  
@@ -23,4 +24,4 @@ Visualize how core API requests flow through the Presentation, Business Logic, a
 
 **Fai AlSharekh** - [GitHub](https://github.com/Fai-Web-Lab)  
 **Layla Alshehri** - [GitHub]()  
-**Mohammed Aloufi** - [GitHub]()
+**Mohammed Aloufi** - [GitHub](https://github.com/MohammedError)
