@@ -12,7 +12,8 @@
 **1. High-Level Package Diagram:** 
 
 
-**2. Class Diagram for Business Logic Layer:** 
+**2. Class Diagram for Business Logic Layer:**
+
 Show the main business entities, the data they contain, and how they relate to each other.
 
 
