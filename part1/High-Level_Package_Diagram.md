@@ -1,15 +1,15 @@
 **High-Level Package Diagram for HBnB Application**
 
 ## Table of Contents
-- [1. Objective](#1-objective)
+- [1. Overview](#1-Overview)
 - [2. Layers and Components](#2-layers-and-components)
 - [3. Communication (Facade Pattern)](#3-communication-facade-pattern)
-- [4. Diagram (Mermaid.js Representation)](#4-diagram-mermaidjs-representation)
+- [4. Diagram](#4-diagram)
 - [5. Explanatory Notes](#5-explanatory-notes)
 
 ---
 
-## **1. Overview**
+## 1. **Overview**
 The goal of this task is to create a **high-level package diagram** that illustrates the three-layer architecture of the HBnB application and shows how these layers interact using the **Facade Pattern**.  
 This diagram provides a conceptual overview of how the main components of the application are organized and communicate with each other.
 
@@ -33,8 +33,8 @@ This diagram provides a conceptual overview of how the main components of the ap
 
 ---
 
-## **4. Diagram (Mermaid.js)**
-
+## **4. Diagram**
+ (Mermaid.js)
 ```mermaid
 classDiagram
 class PresentationLayer {
@@ -57,6 +57,8 @@ BusinessLogicLayer --> PersistenceLayer : Database Operations
 ```
 
 ---
+### **Diagram using drawio**
+![High-Level_Package_Diagram.drawio](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/main/part1/High-Level_Package_Diagram.drawio.png)
 
 ## **Facade Pattern Explanation**
 The **Facade Pattern** is used to streamline interactions between layers:
