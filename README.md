@@ -11,6 +11,7 @@
 ## Project Stages
 **1. High-Level Package Diagram:** 
 
+create a high-level package diagram that illustrates the three-layer architecture of the HBnB application and shows how these layers interact using the Facade Pattern.
 
 **2. Class Diagram for Business Logic Layer:**
 
@@ -18,11 +19,12 @@ Show the main business entities, the data they contain, and how they relate to e
 
 
 **3. Sequence Diagrams:**  
+
 Visualize how core API requests flow through the Presentation, Business Logic, and Persistence layers in the HBnB application. The diagrams clarify component interactions and data flow for key use cases, serving as a blueprint for implementation.
 
 
 ## Authors
 
 **Fai AlSharekh** - [GitHub](https://github.com/Fai-Web-Lab)  
-**Layla Alshehri** - [GitHub]()  
+**Layla Alshehri** - [GitHub](https://github.com/Laja99)  
 **Mohammed Aloufi** - [GitHub](https://github.com/MohammedError)
