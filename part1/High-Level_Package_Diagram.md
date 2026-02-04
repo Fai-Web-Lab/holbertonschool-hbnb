@@ -58,6 +58,14 @@ BusinessLogicLayer --> PersistenceLayer : Database Operations
 
 ---
 
+## **Facade Pattern Explanation**
+The **Facade Pattern** is used to streamline interactions between layers:
+- The **Presentation Layer** does not directly access database logic; instead, it communicates through the **Facade** in the **Business Logic Layer**.
+- The **Facade** provides a simplified interface to interact with the models, ensuring separation of concerns.
+- The **Persistence Layer** remains hidden behind the Business Logic Layer, ensuring direct database interactions are encapsulated.
+
+---
+
 ## **5. Explanatory Notes**
 
 - Presentation Layer: Provides the interface for users to interact with the system; it does not implement business logic.
