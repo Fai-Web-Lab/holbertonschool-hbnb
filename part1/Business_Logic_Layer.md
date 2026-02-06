@@ -1,10 +1,10 @@
-# 1. Detailed Class Diagram for Business Logic Layer
+#  Detailed Class Diagram for Business Logic Layer
 
 
-## Table of Contents
+##  Contents
 1. [Class Diagram](#class-diagram)
 2. [Explanatory Notes](#explanatory-notes)
-3.  Author
+3.  [Author)
 
 
 
