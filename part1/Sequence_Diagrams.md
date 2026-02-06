@@ -1,13 +1,9 @@
 # Sequence Diagrams for API Calls
 
 ## Contents
-- [Description](#description)
 - [Sequence Diagrams](#sequence-diagrams)
 - [Explanatory Notes](#explanatory-notes)
 - [Author](#author)
-
-## Description  
-`Sequence diagrams` are one of the four types of interaction diagrams in UML. They aim to visualize the interactions between objects within a use case, representing system behavior. They help developers design and analyze systems, understand complexity, and illustrate how different parts of a system work together from the initial user interaction at the presentation layer, through business logic processing, and finally to data persistence. In summary, they show how different components of a system interact in a specific sequence to accomplish a task.
 
 ## Sequence Diagrams  
 `Tool used: Draw.io`
@@ -105,4 +101,4 @@ Business Logic: Formulates the search request for the database.
 Persistence Layer (DB): Executes a filtered SQL query (e.g., SELECT * FROM places WHERE city='Riyadh') to ensure only relevant data is returned, optimizing performance.
 
 ## Author  
-**Fai AlSharekh** - [GitHub](https://github.com/Fai-Web-Lab)
+**Fai AlSharekh** 
