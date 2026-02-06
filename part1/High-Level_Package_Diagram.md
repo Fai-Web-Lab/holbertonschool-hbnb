@@ -38,7 +38,8 @@ This diagram provides a conceptual overview of how the main components of the ap
 ```mermaid
 classDiagram
 class PresentationLayer {
-    +ServiceAPI
+    +API
+    +Services
 }
 class BusinessLogicLayer {
     +Facade
