@@ -97,3 +97,20 @@ classDiagram
     User "1" --> "0..*" Review : writes
     Place "1" *-- "0..*" Review : has
     Place "0..*" o-- "0..*" Amenity : has_amenities
+4. Explanatory Notes
+Structural Decisions
+Inheritance (<|--): All main entities (User, Place, Review, Amenity) inherit from BaseModel. This avoids redundancy by centralizing the id, created_at, and updated_at logic in one place.
+
+Encapsulation: All attributes are typed (e.g., String, float, Boolean) to ensure data integrity within the Business Logic Layer before data is passed to the Persistence Layer.
+
+Relationships Breakdown
+User ↔ Place: A One-to-Many relationship. A single User can own multiple Places (0..*), but a Place is created by strictly one User.
+
+User ↔ Review: A One-to-Many relationship. Users can write multiple reviews for different places.
+
+Place ↔ Review: A Composition relationship (*--). Reviews are strictly tied to a Place; if the Place is deleted, the context for the review is lost (though typically soft-deleted).
+
+Place ↔ Amenity: A Many-to-Many relationship (modeled as Aggregation o--). A Place can have a list of Amenities, and an Amenity (like "WiFi") can exist in many different Places independently.
+
+Author
+Mohammed Aloufi - GitHub
