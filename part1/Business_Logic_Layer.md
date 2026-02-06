@@ -14,137 +14,232 @@ The **Detailed Class Diagram** serves as the blueprint for the Business Logic La
 
 ### 2. Entities and Attributes Specification
 
-Below is the detailed specification of each class, structured as requested.
+Below is the detailed specification of each class, including attributes and methods.
 
-**Class: BaseModel**
+**Class: Booking**
 * **Attributes:**
-    * `+ id`: UUID (PK)
-    * `+ created_at`: DateTime
-    * `+ updated_at`: DateTime
+    * `+ booking_id`: int (PK)
+    * `+ user_id`: int (FK)
+    * `+ place_id`: int (FK)
+    * `+ room_id`: int (FK)
+    * `+ create_at`: date
+    * `+ update_at`: date
 * **Methods:**
-    * `+ save()`: void
-    * `+ to_dict()`: dict
+    * `+ method(type)`: type
 
-**Class: User** (Inherits from BaseModel)
+**Class: Room**
 * **Attributes:**
-    * `+ email`: String
-    * `+ password`: String
-    * `+ first_name`: String
-    * `+ last_name`: String
-    * `+ is_admin`: Boolean
+    * `+ room_id`: int (PK)
+    * `+ type`: str
+    * `+ price`: int
+    * `+ Availability`: bool
+    * `+ create_at`: date
+    * `+ update_at`: date
 * **Methods:**
-    * `+ register(email, password)`: User
-    * `+ update_profile(data)`: User
-    * `+ delete()`: void
+    * `+ viewRoomDetails(room_id)`: str
 
-**Class: Place** (Inherits from BaseModel)
+**Class: User**
 * **Attributes:**
-    * `+ title`: String
-    * `+ description`: String
-    * `+ price`: Float
-    * `+ latitude`: Float
-    * `+ longitude`: Float
-    * `+ owner_id`: UUID (FK)
-    * `+ amenities`: List<Amenity>
+    * `+ user_id`: int (UUID4)
+    * `+ first_name`: str
+    * `+ last_name`: str
+    * `+ email`: str
+    * `+ password`: str
+    * `+ phone_number`: int
+    * `+ is_admin`: bool
+    * `+ is_owner`: bool
+    * `+ create_at`: date
+    * `+ update_at`: date
 * **Methods:**
-    * `+ create(data)`: Place
-    * `+ update(data)`: Place
-    * `+ delete()`: void
-    * `+ list()`: List<Place>
+    * `+ register(type)`: type
+    * `+ updateProfile(type)`: type
+    * `+ deleted()`: void
+    * `+ viewPlaceRoom(type)`: type
+    * `+ bookRoom(type)`: type
+    * `+ updateBook(type)`: type
+    * `+ deleteBook(type)`: type
+    * `+ addReviews(review_id)`: str
 
-**Class: Review** (Inherits from BaseModel)
+**Class: Admin** (Inherits from User)
 * **Attributes:**
-    * `+ rating`: Float
-    * `+ comment`: String
-    * `+ user_id`: UUID (FK)
-    * `+ place_id`: UUID (FK)
+    * `+ admin_id`: int (PK)
+    * `+ is_admin`: true
 * **Methods:**
-    * `+ create(user_id, place_id, data)`: Review
-    * `+ update(data)`: Review
-    * `+ delete()`: void
-    * `+ list_by_place(place_id)`: List<Review>
+    * `+ add_room(type)`: type
+    * `+ update_room()`: void
+    * `+ delete_room()`: void
 
-**Class: Amenity** (Inherits from BaseModel)
+**Class: Owner** (Inherits from User)
 * **Attributes:**
-    * `+ name`: String
-    * `+ description`: String
+    * `+ owner_id`: int (PK)
+    * `+ is_owner`: true
 * **Methods:**
-    * `+ create(name)`: Amenity
-    * `+ update(data)`: Amenity
-    * `+ delete()`: void
-    * `+ list()`: List<Amenity>
+    * `+ add_room(type)`: type
+    * `+ update_room()`: void
+    * `+ delete_room()`: void
+
+**Class: Place**
+* **Attributes:**
+    * `+ place_id`: int (PK)
+    * `+ title`: int
+    * `+ description`: str
+    * `+ price`: float
+    * `+ latitude`: float
+    * `+ longitude`: float
+    * `+ amenties`: list
+    * `+ owner_id`: int (FK)
+    * `+ create_at`: date
+    * `+ update_at`: date
+* **Methods:**
+    * `+ created()`: void
+    * `+ updated()`: void
+    * `+ deleted()`: void
+    * `+ listed()`: void
+    * `+ cancelBooking(type)`: type
+    * `+ updateBooking(type)`: type
+
+**Class: Review**
+* **Attributes:**
+    * `+ review_id`: UUID4
+    * `+ user_id`: int
+    * `+ place_id`: int (FK)
+    * `+ comment`: str
+    * `+ rating`: float
+    * `+ create_at`: date
+    * `+ update_at`: date
+* **Methods:**
+    * `+ created()`: void
+    * `+ updated()`: void
+    * `+ deleted()`: void
+    * `+ listed()`: void
+    * `+ viewListReviews(place_id)`: list
+
+**Class: Amenties**
+* **Attributes:**
+    * `+ amentie_id`: int (UUID4)
+    * `+ name`: string
+    * `+ description`: str
+    * `+ create_at`: date
+    * `+ update_at`: date
+* **Methods:**
+    * `+ viewListAmenties(amentie_id)`: str
 
 ### 3. Class Diagram
 **Tool used:** mermaid.js
 
 ```mermaid
 classDiagram
-    %% Base Class (Parent)
-    class BaseModel {
-        +String id
-        +DateTime created_at
-        +DateTime updated_at
-        +save()
-        +to_dict()
+    %% Base Entities (Conceptually grouped attributes)
+    class Booking {
+        +int booking_id
+        +int user_id
+        +int place_id
+        +int room_id
+        +date create_at
+        +date update_at
+        +method(type)
     }
 
-    %% User Entity
+    class Room {
+        +int room_id
+        +str type
+        +int price
+        +bool Availability
+        +date create_at
+        +date update_at
+        +viewRoomDetails(room_id)
+    }
+
     class User {
-        +String first_name
-        +String last_name
-        +String email
-        +String password
-        +Boolean is_admin
-        +register()
-        +update_profile()
-        +delete()
+        +int user_id
+        +str first_name
+        +str last_name
+        +str email
+        +str password
+        +int phone_number
+        +bool is_admin
+        +bool is_owner
+        +date create_at
+        +date update_at
+        +register(type)
+        +updateProfile(type)
+        +deleted()
+        +viewPlaceRoom(type)
+        +bookRoom(type)
+        +updateBook(type)
+        +deleteBook(type)
+        +addReviews(review_id)
     }
 
-    %% Place Entity
+    class Admin {
+        +int admin_id
+        +bool is_admin
+        +add_room(type)
+        +update_room()
+        +delete_room()
+    }
+
+    class Owner {
+        +int owner_id
+        +bool is_owner
+        +add_room(type)
+        +update_room()
+        +delete_room()
+    }
+
     class Place {
-        +String title
-        +String description
+        +int place_id
+        +int title
+        +str description
         +float price
         +float latitude
         +float longitude
-        +String owner_id
-        +List~Amenity~ amenities
-        +create()
-        +update()
-        +delete()
-        +list()
+        +list amenties
+        +int owner_id
+        +date create_at
+        +date update_at
+        +created()
+        +updated()
+        +deleted()
+        +listed()
+        +cancelBooking(type)
+        +updateBooking(type)
     }
 
-    %% Review Entity
     class Review {
+        +UUID4 review_id
+        +int user_id
+        +int place_id
+        +str comment
         +float rating
-        +String comment
-        +String user_id
-        +String place_id
-        +create()
-        +update()
-        +delete()
-        +list_by_place()
+        +date create_at
+        +date update_at
+        +created()
+        +updated()
+        +deleted()
+        +listed()
+        +viewListReviews(place_id)
     }
 
-    %% Amenity Entity
-    class Amenity {
-        +String name
-        +String description
-        +create()
-        +update()
-        +delete()
-        +list()
+    class Amenties {
+        +int amentie_id
+        +string name
+        +str description
+        +date create_at
+        +date update_at
+        +viewListAmenties(amentie_id)
     }
 
-    %% Inheritance Relationships
-    BaseModel <|-- User
-    BaseModel <|-- Place
-    BaseModel <|-- Review
-    BaseModel <|-- Amenity
+    %% Inheritance
+    User <|-- Admin
+    User <|-- Owner
 
-    %% Associations and Compositions
-    User "1" --> "0..*" Place : owns
+    %% Relationships
+    User "1" --> "0..*" Booking : makes
     User "1" --> "0..*" Review : writes
-    Place "1" *-- "0..*" Review : has
-    Place "0..*" o-- "0..*" Amenity : has_amenities
+    Owner "1" --> "0..*" Place : owns
+    Place "1" --> "0..*" Booking : has
+    Place "1" *-- "0..*" Review : includes
+    Place "0..*" o-- "0..*" Amenties : features
+    Place "1" *-- "0..*" Room : contains
+    Booking "1" --> "1" Room : reserves
