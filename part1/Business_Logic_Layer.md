@@ -2,24 +2,75 @@
 
 ## Table of Contents
 1. [Introduction](#1-introduction)
-2. [Entities and Attributes](#2-entities-and-attributes)
+2. [Entities and Attributes Specification](#2-entities-and-attributes-specification)
 3. [Class Diagram](#3-class-diagram)
 
 ---
 
 ### 1. Introduction
-The **Detailed Class Diagram** serves as the blueprint for the Business Logic Layer of the HBnB Evolution application. It visualizes the system's static structure by defining the core entities, their internal attributes, methods, and the relationships between them. This diagram ensures that the implementation follows the Object-Oriented Programming (OOP) principles and adheres to the project's business rules.
+The **Detailed Class Diagram** serves as the blueprint for the Business Logic Layer of the HBnB Evolution application. It visualizes the system's static structure by defining the core entities, their internal attributes, methods, and the relationships between them.
 
-### 2. Entities and Attributes
-The Business Logic Layer consists of the following key classes:
+### 2. Entities and Attributes Specification
 
-| Class | Type | Responsibilities |
-| :--- | :--- | :--- |
-| **BaseModel** | Parent Class | Acts as the base for all other entities. It manages the unique identifier (`id`) and audit timestamps (`created_at`, `updated_at`). |
-| **User** | Entity | Represents the system users. Stores authentication data (`email`, `password`), profile info, and administrative status (`is_admin`). |
-| **Place** | Entity | Represents a property listing. Contains details like location (`lat`, `long`), price, and description. It is linked to a specific Owner (User). |
-| **Review** | Entity | Represents feedback left by a user for a place. Contains a rating and a text comment. |
-| **Amenity** | Entity | Represents features available at a place (e.g., WiFi, Pool). Can be shared across multiple places. |
+Below is the detailed specification of each class, including attributes and methods.
+
+**Class: BaseModel**
+* **Attributes:**
+    * `+ id`: String (UUID4) - Unique identifier.
+    * `+ created_at`: DateTime - Creation timestamp.
+    * `+ updated_at`: DateTime - Last update timestamp.
+* **Methods:**
+    * `+ save()`: void
+    * `+ to_dict()`: dict
+
+**Class: User** (Inherits from BaseModel)
+* **Attributes:**
+    * `+ email`: String
+    * `+ password`: String
+    * `+ first_name`: String
+    * `+ last_name`: String
+    * `+ is_admin`: Boolean
+* **Methods:**
+    * `+ register()`: User
+    * `+ update_profile(data)`: void
+    * `+ delete()`: void
+
+**Class: Place** (Inherits from BaseModel)
+* **Attributes:**
+    * `+ title`: String
+    * `+ description`: String
+    * `+ price`: Float
+    * `+ latitude`: Float
+    * `+ longitude`: Float
+    * `+ owner_id`: String (FK)
+    * `+ amenities`: List<Amenity>
+* **Methods:**
+    * `+ create()`: Place
+    * `+ update(data)`: void
+    * `+ delete()`: void
+    * `+ list()`: List<Place>
+
+**Class: Review** (Inherits from BaseModel)
+* **Attributes:**
+    * `+ rating`: Float
+    * `+ comment`: String
+    * `+ user_id`: String (FK)
+    * `+ place_id`: String (FK)
+* **Methods:**
+    * `+ create()`: Review
+    * `+ update(data)`: void
+    * `+ delete()`: void
+    * `+ list_by_place(place_id)`: List<Review>
+
+**Class: Amenity** (Inherits from BaseModel)
+* **Attributes:**
+    * `+ name`: String
+    * `+ description`: String
+* **Methods:**
+    * `+ create()`: Amenity
+    * `+ update(data)`: void
+    * `+ delete()`: void
+    * `+ list()`: List<Amenity>
 
 ### 3. Class Diagram
 **Tool used:** mermaid.js
