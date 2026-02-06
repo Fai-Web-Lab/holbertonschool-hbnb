@@ -1,21 +1,12 @@
-# Part 1: Technical Documentation
+# 1. Detailed Class Diagram for Business Logic Layer
+
 
 ## Table of Contents
-1. [Description](#description)
-2. [System Architecture](#system-architecture)
-3. [Class Diagram](#class-diagram)
-4. [Explanatory Notes](#explanatory-notes)
-5. [Author](#author)
+1. [Class Diagram](#class-diagram)
+2. [Explanatory Notes](#explanatory-notes)
+3.  Author
 
-## Description
-The **Class Diagram** is a static structure diagram in UML that describes the structure of a system by showing the system's classes, their attributes, operations (or methods), and the relationships among objects. For the **HBnB Evolution** project, this diagram serves as the blueprint for the Business Logic Layer, mapping out the core entities like Users, Places, Reviews, and Amenities, and enforcing the architectural rules before implementation begins. It ensures that data structures are strictly defined and relationships are logically sound.
 
-## System Architecture
-The Class Diagram focuses specifically on the **Business Logic Layer**, which sits between the Presentation and Persistence layers:
-
-1. **BaseModel Abstraction**: Acts as the parent for all entities, enforcing a standard structure (UUIDs, timestamps) across the entire system.
-2. **Core Entities (User, Place, etc.)**: These classes encapsulate the business data and rules. They define *what* data allows the application to function (e.g., a Place must have an owner).
-3. **Entity Relationships**: Defines how data connects, such as a "User" owning a "Place" or a "Place" having "Amenities".
 
 ## Class Diagram
 **Tool used:** Mermaid.js
@@ -108,4 +99,4 @@ classDiagram
     * **Place ↔ Amenity (Many-to-Many):** This relationship allows flexibility. A specific "WiFi" amenity object can be linked to thousands of different places efficiently.
 
 ## Author
-**Mohammed Aloufi** - [GitHub Profile Link](https://github.com/MohammedError)
+**Mohammed Aloufi** 
