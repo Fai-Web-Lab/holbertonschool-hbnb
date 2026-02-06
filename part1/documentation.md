@@ -1,3 +1,9 @@
+## Detailed Class Diagram for Business Logic Layer
+
+### Class Diagram
+**Tool used:** Mermaid.js
+
+```mermaid
 classDiagram
     %% Base Class for common attributes
     class BaseModel {
