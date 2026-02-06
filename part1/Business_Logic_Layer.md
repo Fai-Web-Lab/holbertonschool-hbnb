@@ -87,29 +87,29 @@ created_at / updated_at: Automatic timestamps for tracking and auditing.
 2. User
 Manages system access and identity.
 
-Key Attributes: email (must be unique), password (to be hashed), and is_admin for access control.
+Key Attributes: email (unique), password (hashed), and is_admin for access control.
 
-Methods: register() and update_profile() to manage user lifecycle.
+Methods: register() and update_profile().
 
 3. Place
 Represents the property listings created by Users.
 
-Key Attributes: price (float for precision), latitude/longitude (for mapping), and owner_id for ownership tracking.
+Key Attributes: price (float), latitude/longitude (precision mapping), and owner_id.
 
 4. Review
 Stores user feedback for specific places.
 
-Key Attributes: rating (integer validation) and comment.
+Key Attributes: rating (integer 1-5) and comment.
 
-Constraint: Linked directly to both a specific User and a Place.
+Constraint: Linked to both a User and a Place.
 
 5. Amenity
 Global features that can be assigned to places.
 
-Key Attributes: name and description (e.g., "WiFi", "Pool").
+Key Attributes: name and description.
 
 Key Relationships
-Inheritance (IS-A): Ensures all entities share the standard behavior of BaseModel.
+Inheritance (IS-A): All entities share the standard behavior of BaseModel.
 
 One-to-Many (1:N): * One User can own multiple Places.
 
@@ -117,16 +117,14 @@ One User can write multiple Reviews.
 
 One Place can receive multiple Reviews.
 
-Many-to-Many (M:N): Places and Amenities share a complex relationship where many places can offer the same amenity, and one place can have many different amenities.
+Many-to-Many (M:N): Places and Amenities share a relationship where many places can offer the same amenity.
 
 Design Decisions
-Standardization: Implementing BaseModel ensures that every entity has a consistent structure, which is critical for the persistence layer later on.
+Standardization: Using BaseModel ensures a consistent structure for the persistence layer.
 
-Scalability: By decoupling Amenity from Place, we allow for global management of services without duplicating data.
+Scalability: Decoupling Amenity from Place allows global management without data duplication.
 
-Data Precision: Latitude and longitude are stored as floats to ensure compatibility with modern GPS and map APIs.
-
-Security Integrity: The is_admin attribute is placed at the logic level to facilitate role-based authorization in the presentation layer.
+Security: The is_admin flag is at the logic level to facilitate role-based authorization.
 
 Author
 Mohammed Aloufi - GitHub Profile
