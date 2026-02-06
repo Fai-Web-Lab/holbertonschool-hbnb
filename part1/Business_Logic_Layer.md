@@ -103,5 +103,4 @@ Composition (Place → Review): Reviews are strictly bound to the Place lifecycl
 
 Association (Place ↔ Amenity): A flexible many-to-many relationship.
 
-5. Author
-Mohammed Aloufi - GitHub
+
