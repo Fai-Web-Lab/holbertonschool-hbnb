@@ -1,3 +1,5 @@
+Markdown
+
 ## Detailed Class Diagram for Business Logic Layer
 
 ### Class Diagram
@@ -100,4 +102,4 @@ User - Place: A One-to-Many relationship (A user can own multiple places).
 
 Place - Amenity: A Many-to-Many relationship (A place has many amenities, and an amenity belongs to many places).
 
-User/Place - Review: A User writes many reviews; a Place rec
+User/Place - Review: A User writes many reviews; a Place receives many reviews.
