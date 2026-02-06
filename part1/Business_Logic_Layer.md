@@ -4,7 +4,7 @@
 ##  Contents
 1. [Class Diagram](#class-diagram)
 2. [Explanatory Notes](#explanatory-notes)
-3.  [Author)
+3. [Author](#author)
 
 
 
