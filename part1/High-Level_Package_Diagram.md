@@ -19,7 +19,7 @@ This diagram provides a conceptual overview of how the main components of the ap
 | Layer | Components | Responsibilities |
 |-------|------------|-----------------|
 | **Presentation Layer** | Service APIs, Endpoints | Handles user requests and responses. Does not contain business logic or direct database access. |
-| **Business Logic Layer** | Facade, Models (User, Place, Review, Amenity) | Core business logic, validation, and coordination between layers. The Facade provides a simplified interface for the Presentation Layer. |
+| **Business Logic Layer** | Facade, Models (User, Place, Review, Amenity, BaseEntity) | Core business logic, validation, and coordination between layers. The Facade provides a simplified interface for the Presentation Layer. |
 | **Persistence Layer** | Database, Repository / Storage | Handles data storage and retrieval (CRUD operations). No direct interaction with the Presentation Layer. |
 
 ---
@@ -46,6 +46,7 @@ class BusinessLogicLayer {
     +Place
     +Review
     +Amenity
+    +BaseEntity
 }
 class PersistenceLayer {
     +DatabaseAccess
@@ -57,8 +58,7 @@ BusinessLogicLayer --> PersistenceLayer : Database Operations
 ```
 
 ---
-### **Diagram using drawio**
-![High-Level_Package_Diagram.drawio](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/main/part1/High-Level_Package_Diagram.drawio.png)
+
 
 ## **Facade Pattern Explanation**
 The **Facade Pattern** is used to streamline interactions between layers:
