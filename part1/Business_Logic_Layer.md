@@ -78,3 +78,58 @@ classDiagram
     User "1" -- "0..*" Review : writes
     Place "1" -- "0..*" Review : has
     Place "0..*" -- "0..*" Amenity : contains
+Entities and Attributes
+1. BaseModel
+The foundational class for all system entities. It centralizes:
+
+id: A unique identifier (UUID4) for every object.
+
+created_at / updated_at: Automatic timestamps for tracking and auditing.
+
+2. User
+Manages system access and identity.
+
+Key Attributes: email (unique), password (hashed), and is_admin for access control.
+
+Methods: register() and update_profile().
+
+3. Place
+Represents the property listings created by Users.
+
+Key Attributes: price (float), latitude / longitude (precision mapping), and owner_id.
+
+4. Review
+Stores user feedback for specific places.
+
+Key Attributes: rating (integer 1-5) and comment.
+
+Constraint: Linked to both a User and a Place.
+
+5. Amenity
+Global features that can be assigned to places.
+
+Key Attributes: name and description.
+
+Key Relationships
+Inheritance (IS-A)
+All entities share the standard behavior of BaseModel.
+
+One-to-Many (1:N)
+One User can own multiple Places.
+
+One User can write multiple Reviews.
+
+One Place can receive multiple Reviews.
+
+Many-to-Many (M:N)
+Places and Amenities share a relationship where many places can offer the same amenity.
+
+Design Decisions
+Standardization: Using BaseModel ensures a consistent structure for the persistence layer.
+
+Scalability: Decoupling Amenity from Place allows global management without data duplication.
+
+Security: The is_admin flag is at the logic level to facilitate role-based authorization.
+
+Author
+Mohammed Aloufi - GitHub Profile
