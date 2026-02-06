@@ -86,7 +86,7 @@ User: Represents the system's actors. It includes is_admin to distinguish betwee
 
 Place: Holds the property details (price, location, etc.) and links to a specific owner_id.
 
-Review: functions as a link between a User and a Place, storing the rating and comment.
+Review: Functions as a link between a User and a Place, storing the rating and comment.
 
 Amenity: Represents features (like Wifi, Pool) that can be associated with multiple places.
 
@@ -100,4 +100,4 @@ User - Place: A One-to-Many relationship (A user can own multiple places).
 
 Place - Amenity: A Many-to-Many relationship (A place has many amenities, and an amenity belongs to many places).
 
-User/Place - Review: A User writes many reviews; a Place receives many reviews.
+User/Place - Review: A User writes many reviews; a Place rec
