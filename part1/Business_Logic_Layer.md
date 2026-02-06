@@ -93,14 +93,3 @@ classDiagram
     Place "1" *-- "0..*" Review : has
     Place "0..*" -- "0..*" Amenity : association
     User "1" -- "0..*" Review : write
-4. Explanatory Notes
-Key Relationships Breakdown
-Inheritance: All entities inherit from BaseEntity for ID management.
-
-Composition (User → Place): Marked by the filled diamond. A Place cannot exist without an owner.
-
-Composition (Place → Review): Reviews are strictly bound to the Place lifecycle.
-
-Association (Place ↔ Amenity): A flexible many-to-many relationship.
-
-
