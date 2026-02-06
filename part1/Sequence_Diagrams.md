@@ -1,8 +1,7 @@
 # Sequence Diagrams for API Calls
 
-## Table of Contents
+## Contents
 - [Description](#description)
-- [System Architecture](#system-architecture)
 - [Sequence Diagrams](#sequence-diagrams)
 - [Explanatory Notes](#explanatory-notes)
 - [Author](#author)
@@ -10,121 +9,100 @@
 ## Description  
 `Sequence diagrams` are one of the four types of interaction diagrams in UML. They aim to visualize the interactions between objects within a use case, representing system behavior. They help developers design and analyze systems, understand complexity, and illustrate how different parts of a system work together from the initial user interaction at the presentation layer, through business logic processing, and finally to data persistence. In summary, they show how different components of a system interact in a specific sequence to accomplish a task.
 
-## System Architecture  
-**1. Presentation Layer (Services/API):**  
-The entry point for all client requests. It handles HTTP routing, authentication headers, and sends the final JSON response back to the user.
-
-**2. Business Logic Layer (Models/Services):**   
-The "brain" of the app. This layer validates data (e.g., checking if an email is unique or if a price is positive) and applies business rules before passing data down.
-
-**3. Persistence Layer (Database/Repository):**  
-The storage engine. It is responsible for the CRUD (Create, Read, Update, Delete) operations within the database.
-
 ## Sequence Diagrams  
-`Tool used: mermaid.ai`
+`Tool used: Draw.io`
 
 **1. User Registration:**  
-```
-sequenceDiagram
-    participant User
-    participant API as Presentation Layer
-    participant Logic as Business Logic
-    participant DB as Persistence Layer
 
-    User->>API: POST /users (registration data)
-    API->>Logic: validateUser(data)
-    
-    alt User already exists
-        Logic-->>API: Error: User already exists
-        API-->>User: 400 Bad Request
-    else New User
-        Logic->>DB: save(new_user)
-        DB-->>Logic: Confirm Saved
-        Logic-->>API: User Created Object
-        API-->>User: 201 Created (User Data)
-    end
-```
-![User Registration Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/6037ba500df4cd2a4f9dd70aa70c753328ce1004/part1/User%20Registration.png?raw=true)
+![User Registration Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/357cd40047a7d64675e516357b61a1563686f6d4/part1/User%20Registration.png?raw=true)
 
 **2. Place Creation:**  
-```
-sequenceDiagram
-    participant Owner as User
-    participant API as Presentation Layer
-    participant Logic as Business Logic
-    participant DB as Persistence Layer
 
-    Owner->>API: POST /places (place details)
-    API->>Logic: validatePlace(details)
-    
-    alt Missing Required Fields
-        Logic-->>API: Error: Incomplete Data
-        API-->>Owner: 400 Bad Request
-    else Valid Data
-        Logic->>DB: storePlace(details)
-        DB-->>Logic: Success
-        Logic-->>API: Place Object
-        API-->>Owner: 201 Created
-    end
-```
-![Place Creation Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/6037ba500df4cd2a4f9dd70aa70c753328ce1004/part1/Place%20Creation.png?raw=true)
+![Place Creation Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/357cd40047a7d64675e516357b61a1563686f6d4/part1/Place%20Creation.png?raw=true)
 
 **3. Review Submission:**  
-```
-sequenceDiagram
-    participant User
-    participant API
-    participant Logic
-    participant DB
 
-    User->>API: POST /places/{id}/reviews
-    API->>Logic: checkPermission(user, place)
-    
-    opt Place doesn't exist
-        Logic-->>API: 404 Not Found
-        API-->>User: Error
-    end
-
-    Logic->>DB: addReview(rating, comment)
-    DB-->>Logic: OK
-    Logic-->>API: Review Summary
-    API-->>User: 201 Created
-```
-![Review Submission Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/6037ba500df4cd2a4f9dd70aa70c753328ce1004/part1/Review%20Submission.png?raw=true)
+![Review Submission Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/357cd40047a7d64675e516357b61a1563686f6d4/part1/Review%20Submission.png?raw=true)
 
 **4. Fetching a List of Places:**  
-```
-sequenceDiagram
-    participant User
-    participant API
-    participant Logic
-    participant DB
 
-    User->>API: GET /places?city=Paris
-    API->>Logic: parseFilters(city)
-    Logic->>DB: queryPlaces(criteria)
-    DB-->>Logic: List of Places
-    Logic-->>API: Filtered Objects
-    API-->>User: 200 OK (JSON List)
-```
-![Fetching a List of Places Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/6037ba500df4cd2a4f9dd70aa70c753328ce1004/part1/Fetching%20a%20List%20of%20Places.png?raw=true)
+![Fetching a List of Places Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/357cd40047a7d64675e516357b61a1563686f6d4/part1/Fetching%20a%20List%20of%20Places.png?raw=true)
 
 ## Explanatory Notes  
-**Key Flow Breakdown**  
+### 1- User Registration
 
-- Request Initiation: Every flow begins at the Presentation Layer, which acts as a gatekeeper.
+- **Purpose:** 
+This diagram illustrates the steps required to create a new user account while ensuring data integrity and uniqueness.
 
-- Validation Gate: Before touching the database, the Business Logic Layer performs crucial checks. For example, in User Registration, it ensures no duplicate emails exist.
+- **API Call:** POST /api/v1/users
 
-- Data Persistence: The Persistence Layer is only reached if all business rules are satisfied, ensuring that the database remains clean and accurate.
+- **Key Steps:**
 
-- Response Cycle: The system uses a "bottom-up" response flow where the Database confirms to the Logic, the Logic confirms to the API, and the API finally notifies the User.  
+The Presentation Layer (API) receives the registration data and passes it to the Business Logic for format validation.
 
-**Strategic Use of Fragments**  
+The Business Logic layer coordinates with the Persistence Layer (DB) to check if the email already exists in the system.
 
-- Alt Fragments: Used in Registration and Place Creation to handle "Success" vs "Failure" scenarios. This is vital for showing how the API handles errors like 400 Bad Request.
+- **Layer Contributions:**
 
-- Opt Fragments: Used in Review Submission to show conditional checks, such as verifying if a place exists before allowing a review.
+Persistence Layer (DB): Performs the lookup. If the user is found, it returns an error; if not found, it executes the Save(new_user) command.
+
+Business Logic: Acts as the decision-maker, returning either a 400 Bad Request (if user exists) or a 201 Created (if successful).
+
+### 2- Place Creation
+
+- **Purpose:** This diagram outlines the security and validation flow required to add a new place to the application.
+
+- **API Call:** POST /api/v1/places
+
+- **Key Steps:**
+
+Before processing the data, the API sends the request to the Auth layer to validate the JWT Token.
+
+Once the token is verified as valid, the Business Logic performs internal data validation.
+
+- **Layer Contributions:**
+
+Auth Layer: Ensures the user is authenticated and authorized to perform the action.
+
+Business Logic: Ensures the place details meet the required business rules.
+
+Persistence Layer (DB): Permanently inserts the record into the database.
+
+### 3- Review Submission
+
+- **Purpose:** This shows how the system handles user feedback, ensuring the user is logged in and the target entity exists.
+
+- **API Call:** POST /api/v1/reviews
+
+- **Key Steps:**
+
+The request is first checked by the Auth layer. If the user is not authenticated, they receive a 401 Unauthorized and are redirected to login.
+
+If authenticated, the Business Logic checks with the DB to ensure the place being reviewed actually exists.
+
+- **Layer Contributions:**
+
+Business Logic: Prevents "orphaned reviews" by verifying the existence of the place before saving.
+
+Persistence Layer (DB): Confirms the place exists and then saves the review record.
+
+### 4- Fetching a List of Places
+
+- **Purpose:** This process describes how the system retrieves and filters data based on specific user criteria, such as a city.
+
+- **API Call:** GET /api/v1/places?city=Riyadh
+
+- **Key Steps:**
+
+The Browser sends a GET request with a query parameter (city=Riyadh).
+
+The API Layer extracts this filter and passes it to the Business Logic.
+
+- **Layer Contributions:**
+
+Business Logic: Formulates the search request for the database.
+
+Persistence Layer (DB): Executes a filtered SQL query (e.g., SELECT * FROM places WHERE city='Riyadh') to ensure only relevant data is returned, optimizing performance.
 
 ## Author  
 **Fai AlSharekh** - [GitHub](https://github.com/Fai-Web-Lab)
