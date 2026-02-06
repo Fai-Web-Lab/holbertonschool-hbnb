@@ -1,5 +1,3 @@
-Markdown
-
 ## Detailed Class Diagram for Business Logic Layer
 
 ### Class Diagram
@@ -75,31 +73,3 @@ classDiagram
     User "1" -- "0..*" Review : Writes
     Place "1" -- "0..*" Review : Receives
     Place "*" -- "*" Amenity : Has
-Explanatory Notes
-BaseModel (Abstraction):
-
-Acts as the parent class for all entities to enforce the DRY (Don't Repeat Yourself) principle.
-
-It automatically manages the unique identifier (id as UUID) and audit timestamps (created_at, updated_at) for every object created in the system.
-
-Key Entities:
-
-User: Represents the system's actors. It includes is_admin to distinguish between regular users and administrators.
-
-Place: Holds the property details (price, location, etc.) and links to a specific owner_id.
-
-Review: Functions as a link between a User and a Place, storing the rating and comment.
-
-Amenity: Represents features (like Wifi, Pool) that can be associated with multiple places.
-
-Relationships:
-
-Inheritance: All entities inherit from BaseModel.
-
-Composition/Association:
-
-User - Place: A One-to-Many relationship (A user can own multiple places).
-
-Place - Amenity: A Many-to-Many relationship (A place has many amenities, and an amenity belongs to many places).
-
-User/Place - Review: A User writes many reviews; a Place receives many reviews.
