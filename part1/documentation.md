@@ -19,6 +19,7 @@
 
 **1.1 High-Level Package Diagram**
 
+![High-Level Package Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/8bc9eb35a2cf7e4675e608da611bb9e458999d48/part1/_High-LevelPackageDiagram.drawio.png)
 
 **1.2 Explanatory Notes**
 **1.2.1 Purpose of the Diagram**
