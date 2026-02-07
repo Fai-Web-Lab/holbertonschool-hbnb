@@ -127,35 +127,164 @@ Confirmation (account created) or error (user exists) returns to the user.
 
 1- Purpose of the Diagram:  
 
-This diagram describes how new users register and how the system prevents duplicate accounts.
+It describes how new users register and how the system prevents duplicate accounts.
 
 2- Key Components Involved:
 - User
 - Browser
-- API Layer
+- Presentation Layer (API)
 - Auth / Validation Logic
 - Business Logic
-- Database Layer
+- Persistence Layer (Database)
 
 3- Design Decisions and Rationale:  
-
 - Input validation occurs before database interaction.
 - Duplicate user checking prevents data conflicts.
 - Uses ALT flow for existing vs new users.
 
 4- How It Fits into Overall Architecture:  
 
-This diagram represents the entry point to the system, ensuring only valid and unique users are created.
+It represents the entry point to the system, ensuring only valid and unique users are created.
 
+**3.2. Place Creation:**  
 
+![Place Creation Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/357cd40047a7d64675e516357b61a1563686f6d4/part1/Place%20Creation.png?raw=true)
 
+**3.2.1. Data Flow and Interactions:**
 
+1- User → Browser:  
+User submits a form with new place details.
 
+2- Browser → API Layer:  
+Sends a `POST /places` request with JSON payload.
 
+3- API → Authentication Service:  
+Before processing, API validates the JWT token to ensure the user is authenticated.
 
+4- API → Business Logic Layer:  
+Once authenticated, the data is sent to business logic. Here, the system validates fields (e.g., name, location, price).
 
+5- Business Logic → Database:  
+Valid data is persisted into the database.
 
+6- Database → Business Logic → API → Browser → User:  
+Confirmation of creation (success/failure) flows back up the chain, informing the user.
 
+**3.2.2. Explanatory Notes**
+
+1- Purpose of the Diagram:  
+
+It shows how a new place listing is created in the system, including authentication, validation, and database persistence.
+
+2- Key Components Involved:
+- User
+- Browser
+- Presentation Layer (API)
+- Authentication Service (Auth)
+- Business Logic
+- Persistence Layer (DB)
+
+3- Design Decisions and Rationale:  
+
+- JWT validation ensures only authenticated users can create places.
+- Business layer validates place data before saving.
+- Database layer is isolated for data integrity and security.
+
+4- How It Fits into Overall Architecture:  
+
+It represents a write operation and highlights secure resource creation using authentication and validation layers.
+
+**3.3. Review Submission:**  
+
+![Review Submission Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/357cd40047a7d64675e516357b61a1563686f6d4/part1/Review%20Submission.png?raw=true)
+
+**3.3.1. Data Flow and Interactions:**
+
+1- User → Browser:  
+User writes a review for a place.
+
+2- Browser → API Layer:  
+Sends `POST /reviews` request.
+
+3- API → Auth Service:  
+API checks if user is authenticated (ALT flow logic: authenticated vs unauthenticated).
+
+4- API → Business Logic:  
+If authenticated, business logic validates that the place exists and the review data is correct.
+
+5- Business Logic → Database:  
+Review is inserted into the database.
+
+6- Database → Business Logic → API → Browser → User:  
+Success message or error returns to the user.
+
+**3.3.2. Explanatory Notes**
+
+1- Purpose of the Diagram:  
+
+It explains how users submit reviews while handling authentication scenarios (authenticated vs unauthenticated users).
+
+2- Key Components Involved:
+- User
+- Browser
+- Presentation Layer (API)
+- Auth Service
+- Business Logic
+- persistence Layer (DB)
+
+3- Design Decisions and Rationale:  
+
+- Uses ALT fragment logic to handle authentication states.
+- Prevents unauthorized review submissions.
+- Business logic verifies place existence before saving review.
+
+4- How It Fits into Overall Architecture:  
+
+It supports data integrity and security enforcement, ensuring reviews are linked to valid users and places.
+
+**3.4. Fetching a List of Places:**  
+
+![Fetching a List of Places Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/357cd40047a7d64675e516357b61a1563686f6d4/part1/Fetching%20a%20List%20of%20Places.png?raw=true)
+
+**3.4.1. Data Flow and Interactions:**
+
+1- User → Browser:  
+The user inputs search criteria (e.g., city = Riyadh) in the UI. This data is packaged in an HTTP request.
+
+2- Browser → API (Presentation Layer):  
+The browser sends the request to the API endpoint (`GET /places`). The API acts as a mediator, receiving the request and parsing parameters.
+
+3- API → Business Logic Layer:  
+The API forwards the parsed filters to the business logic, which prepares a query. The business logic may apply additional filtering or validation to avoid sending unsafe queries directly to the database.
+
+4- Business Logic → Database (Persistence Layer):  
+The query is executed against the database, fetching matching places.
+
+5- Database → Business Logic → API → Browser → User:  
+Results flow back up the stack: the database returns the data to the business logic, which may format it; the API sends it as an HTTP response to the browser; finally, the user sees the list.
+
+**3.4.2. Explanatory Notes**
+
+1- Purpose of the Diagram:  
+
+It illustrates how the system retrieves a filtered list of places based on user search criteria (e.g., city = Riyadh). It demonstrates the read operation flow from the user interface down to the database and back.
+
+2- Key Components Involved:
+- User
+- Browser
+- Presentation Layer (API)
+- Business Logic
+- Persistence Layer (DB)
+
+3- Design Decisions and Rationale:  
+
+- Layer separation ensures maintainability and scalability.
+- Business logic handles filtering to avoid database coupling with UI.
+- API acts as the contract between frontend and backend.
+
+4- How It Fits into Overall Architecture:  
+
+It represents a read/query operation and demonstrates how the layered architecture supports safe and scalable data retrieval.
 
 
  ## Authors
