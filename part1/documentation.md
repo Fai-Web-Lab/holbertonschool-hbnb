@@ -196,7 +196,39 @@ classDiagram
     Place "1" -- "0..*" Review : Receives
     Place "*" -- "*" Amenity : Has
 ```
+### 2.1 Explanatory Notes
 
+**2.1.1 Purpose of the Diagram**
+
+The Class Diagram above illustrates the **static structure** of the Business Logic Layer. It defines the core entities (classes) of the HBnB application, their attributes, methods, and the relationships between them. This diagram serves as the blueprint for the object-oriented design, ensuring that data is organized logically before being processed by the application or stored in the database.
+
+**2.1.2 Key Entities and Responsibilities**
+
+| Class | Role & Responsibilities |
+|-------|-------------------------|
+| **BaseModel** | The parent class for all other entities. It manages common attributes like unique identifiers (`id`) and timestamps (`created_at`, `updated_at`). It also provides standard methods for serialization (`to_dict`) and persistence (`save`). |
+| **User** | Represents the system's users. Handles authentication data (email, password), profile information, and administrative privileges (`is_admin`). |
+| **Place** | The core entity of the platform. Contains details about the rental property (title, price, location) and links to the owner and amenities. |
+| **Review** | Stores feedback provided by users for specific places. It links the `User` who wrote it and the `Place` being reviewed. |
+| **Amenity** | Represents features available at a property (e.g., Wifi, Pool). It allows for better categorization and filtering of places. |
+
+**2.1.3 Relationships and Inheritance**
+
+1.  **Inheritance (`<|--`)**:
+    * **Structure:** `User`, `Place`, `Review`, and `Amenity` all inherit from `BaseModel`.
+    * **Reason:** This ensures that every object in the system automatically has a unique UUID and timestamps without rewriting code.
+
+2.  **Associations**:
+    * **User ↔ Place (1 to 0..*):** A single User can own multiple Places (or none), but a Place is owned by exactly one User.
+    * **User ↔ Review (1 to 0..*):** A User can write many Reviews.
+    * **Place ↔ Review (1 to 0..*):** A Place can receive multiple Reviews.
+    * **Place ↔ Amenity (* to *):** A Place can have many Amenities, and an Amenity can belong to many Places (Many-to-Many relationship).
+
+**2.1.4 Design Decisions**
+
+* **Utilization of UUIDs:** Instead of simple integer IDs, we use UUIDs (Universally Unique Identifiers) in the `BaseModel`. This ensures unique identification across distributed systems and improves security by making IDs non-guessable.
+* **Separation of Concerns:** Each class is responsible for its own data integrity. For example, the `User` class handles user-specific logic, while the `Place` class manages property details.
+* **Serialization Support:** The `to_dict()` method in `BaseModel` is crucial for the API layer. It allows instances to be easily converted into JSON format for HTTP responses.
  ## 3. API Interaction Flow
 
 **3.1. User Registration:**  
