@@ -1,11 +1,11 @@
 # Sequence Diagrams for API Calls
 
 ## Contents
-- [Sequence Diagrams](#sequence-diagrams)
+- [Diagrams](#diagrams)
 - [Explanatory Notes](#explanatory-notes)
 - [Author](#author)
 
-## Sequence Diagrams  
+## Diagrams  
 `Tool used: Draw.io`
 
 **1. User Registration:**  
@@ -25,6 +25,56 @@
 ![Fetching a List of Places Sequence Diagram](https://github.com/Fai-Web-Lab/holbertonschool-hbnb/blob/357cd40047a7d64675e516357b61a1563686f6d4/part1/Fetching%20a%20List%20of%20Places.png?raw=true)
 
 ## Explanatory Notes  
+
+### Shapes, Lines, and Arrows:
+In a UML Sequence Diagram, every shape, line, and arrow has a specific technical meaning Based on the diagrams for the project, here is a breakdown of the notation used and how each element contributes to describing the system's behavior.
+
+1. The Lifeline (Boxes and Vertical Dashed Lines):
+
+Each vertical element represents a participant in the interaction.Rectangular Box (Head): Represents an Object or a Layer in the system (e.g., Browser, Presentation Layer, Business Logic).Vertical Dashed Line: This is the Lifeline. It represents the existence of the component over time. The interaction moves from top to bottom, representing the passage of time.
+
+2. Activation Bars (Thin Vertical Rectangles):
+
+The Shape: These are the thin "rectangles" placed on top of the lifelines.Meaning: An activation bar indicates that the component is currently active or performing a process. For example, in the "Place Creation" diagram, the Auth layer has a short activation bar because it only works during the token validation phase.Duration: When a bar ends, it means the component has finished its task for that specific part of the request.
+
+3. Message Arrows (The Lines):
+
+Arrows represent communication between components. Solid Line with Solid Arrowhead ($\rightarrow$): Represents a Synchronous Message. The sender (e.g., the Browser) sends a request and waits for the receiver (e.g., the API) to process it before moving on.Dashed Line with Open Arrowhead ($\dashrightarrow$): Represents a Return Message. This is used to pass data back to the original sender after a process is complete, such as the 201 Created response.Self-Loop Arrow: An arrow that starts and ends at the same activation bar (e.g., Validate place data). This represents a Self-Message or an internal method execution within that layer.
+
+4. Combined Fragments:
+
+The Alt box is visually divided into horizontal sections (often appearing as two or more "squares" or regions) separated by a dashed line. Each section represents a different path:
+
+Upper Region (The "If" path): This region contains the interaction that occurs if the first condition (called a Guard) is met. In your registration diagram, this is labeled [User already exists].
+
+Lower Region (The "Else" path): This region contains the interaction that occurs if the previous condition is false. In your diagram, this is labeled [New User].
+
+5. Actors and Objects:
+
+They are represented as participants in the interaction, but they serve distinct roles in the system's architecture.
+
+- Actors (External Entities):
+Shape: Represented by a stick figure.
+
+Meaning: An Actor is an external entity that exists outside the software system. It initiates interactions with the application.
+
+- Objects (Internal Components):
+Shape: Represented by rectangular boxes at the top and bottom of the diagram.
+
+Meaning: These represent internal components, layers, or specific instances of classes within the system.
+
+6. Notes:
+
+are specialized shapes used to provide additional context or clarify complex logic that cannot be easily captured by arrows alone.
+
+The Shape of a Note:
+Visual Appearance: A Note is represented as a rectangle with a folded corner (dog-eared), resembling a piece of paper.
+
+Placement: It can be placed over a single lifeline or spanned across multiple lifelines to describe a specific interaction.
+
+
+
+
 ### 1- User Registration
 
 - **Purpose:** 
