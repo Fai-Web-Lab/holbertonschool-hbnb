@@ -17,7 +17,103 @@
 
 ## 1. High-Level Architecture
 
+**1.1 High-Level Package Diagram**
 
+
+**1.2 Explanatory Notes**
+**1.2.1 Purpose of the Diagram**
+
+This package diagram provides a **high-level visual representation** of the HBnB Evolution application's three-layer architecture. It serves multiple purposes:
+
+- **Architectural Visualization:** Clearly illustrates the separation of concerns between presentation, business logic, and persistence layers
+
+- **Communication Flow:** Demonstrates how data and requests move through the system using the Facade Pattern
+
+- **Component Organization:** Shows how related classes are grouped into packages for better maintainability
+
+- **Design Pattern Implementation:** Highlights the use of Facade Pattern to simplify complex subsystem interactions
+
+- **Onboarding Tool:** Helps new developers understand the system structure without diving into code
+
+    The diagram acts as a **living documentation** that bridges the gap between conceptual design and actual implementation.
+
+**1.2.2 Key Components and Classes**
+
+
+| Layer | Components | Responsibilities |
+|-------|------------|-----------------|
+| **Presentation Layer** | Services, APIs Endpoints | Handles user requests and responses. Does not contain business logic or direct database access. |
+| **Business Logic Layer** | Facade, Models (User, Place, Review, Amenity, BaseModel) | Core business logic, validation, and coordination between layers. The Facade provides a simplified interface for the Presentation Layer. |
+| **Persistence Layer** | Database, Repository / Storage | Handles data storage and retrieval (CRUD operations). No direct interaction with the Presentation Layer. |
+
+**1.2.3 Connections Between Layers**
+1. **Presentation Layer → Business Logic Layer**
+
+    Connection: API/Services → Facade
+    
+    Type: Service Invocation / Method Call
+    
+    Purpose: Presentation layer calls facade methods to execute business operations
+    
+    Example: facade.registerUser(userData)
+
+2. **Business Logic Layer Internal**
+
+    Connection: Facade → Models
+
+    Type: Business Logic Execution
+
+    Purpose: Facade creates and manipulates domain entities (User, Place, etc.)
+
+    Example: User user = new User(data)
+
+3. **Business Logic Layer → Persistence Layer**
+
+    Connection: Models → Repositories
+
+    Type: Data Persistence / CRUD Operations
+
+    Purpose: Entities save/load data through repositories
+
+    Example: userRepository.save(user)
+
+4. **Persistence Layer → Database**
+
+    Connection: Repositories → Database
+
+    Type: Database Operations / SQL Execution
+
+    Purpose: Repositories execute SQL queries on the database
+
+    Example: INSERT INTO users (...) VALUES (...)
+
+**1.2.4 Design Decisions**
+
+- Three-Layer Architecture: Separates UI, business rules, and data for maintainability and independent development.
+
+- Facade Pattern: Single entry point (Facade) simplifies client interaction and hides internal complexity.
+
+- Repository Pattern: Abstracts database access, enabling easy switching between databases and better testing.
+
+- Domain Models: Business logic resides in entities (User, Place, etc.), keeping it centralized and organized.
+
+**1.2.5 Architecture Integration**
+
+This diagram represents the core structure of HBnB:
+
+- Flow:
+
+    Client → Presentation (API/Services) → Business Logic (Facade → Models) → Persistence (Repositories → Database)
+
+- Role in Overall System:
+
+    Foundation for all features (user mgmt, place listing, reviews)
+
+    Ensures clean separation for scalability
+
+    Follows proven enterprise patterns
+
+    Enables parallel team work on different layers
 
 
 
