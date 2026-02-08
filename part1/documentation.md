@@ -416,7 +416,7 @@ It illustrates how the system retrieves a filtered list of places based on user 
 It represents a read/query operation and demonstrates how the layered architecture supports safe and scalable data retrieval.
 
 
-This document was developed with contributions from:
+**This document was developed with contributions from**
 
 - **Layla AlShehri**, High-Level Architecture
 - **Mohammed AlOufi**, Business Logic Layer
