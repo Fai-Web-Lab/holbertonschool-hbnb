@@ -417,6 +417,6 @@ It represents a read/query operation and demonstrates how the layered architectu
 
 
  ## Authors
- **Layla AlShehri**  
- **Mohammed AlOufi**  
- **Fai AlSharekh**
+High-Level Architecture by **Layla AlShehri**  
+Business Logic Layer by  **Mohammed AlOufi**  
+API Interaction Flow by **Fai AlSharekh**
