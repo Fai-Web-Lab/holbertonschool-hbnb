@@ -1,3 +1,6 @@
+from app.models.amenity import Amenity
+from app.models.place import Place
+from app.models.review import Review
 from app.persistence.repository import InMemoryRepository
 
 
@@ -10,12 +13,41 @@ class HBnBFacade:
 
     def get_user(self, user_id):
         return self.user_repo.get(user_id)
+#------------------------------------------------
+    # ***** PLACES ******
+    def create_place(self, place_data):
+        place = Place(**place_data)
+        self.place_repo.add(place)
+        return place
 
     def get_place(self, place_id):
         return self.place_repo.get(place_id)
 
+    def get_all_places(self):
+        return self.place_repo.get_all()
+
+    def update_place(self, place_id, data):
+        self.place_repo.update(place_id, data)
+        return self.get_place(place_id)
+#--------------------------------------------------
+    # ***** AMENITIES ******
+    def create_amenity(self, data):
+        amenity = Amenity(**data)
+        self.amenity_repo.add(amenity)
+        return amenity
+
+    def get_amenity(self, amenity_id):
+        return self.amenity_repo.get(amenity_id)
+
+    def get_all_amenities(self):
+        return self.amenity_repo.get_all()
+
+    def update_amenity(self, amenity_id, data):
+        self.amenity_repo.update(amenity_id, data)
+        return self.get_amenity(amenity_id)
+
+#--------------------------------------------------
     def create_review(self, review_data):
-        from models.review import Review
 
         user = self.get_user(review_data['user_id'])
         place = self.get_place(review_data['place_id'])
