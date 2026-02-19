@@ -1,3 +1,4 @@
+from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
 from app.models.review import Review
@@ -11,10 +12,33 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
         self.amenity_repo = InMemoryRepository()
 
+    # ===== USERS =====
+    def create_user(self, user_data):
+        existing_user = self.get_user_by_email(user_data['email'])
+        if existing_user:
+            raise ValueError("Email already registered")
+
+        user = User(**user_data)
+        self.user_repo.add(user)
+        return user
+
     def get_user(self, user_id):
         return self.user_repo.get(user_id)
-#------------------------------------------------
-    # ***** PLACES ******
+
+    def get_user_by_email(self, email):
+        return self.user_repo.get_by_attribute('email', email)
+
+    def get_all_users(self):
+        return self.user_repo.get_all()
+
+    def update_user(self, user_id, data):
+        user = self.get_user(user_id)
+        if not user:
+            return None
+        self.user_repo.update(user_id, data)
+        return self.get_user(user_id)
+
+    # ===== PLACES =====
     def create_place(self, place_data):
         place = Place(**place_data)
         self.place_repo.add(place)
@@ -29,8 +53,8 @@ class HBnBFacade:
     def update_place(self, place_id, data):
         self.place_repo.update(place_id, data)
         return self.get_place(place_id)
-#--------------------------------------------------
-    # ***** AMENITIES ******
+
+    # ===== AMENITIES =====
     def create_amenity(self, data):
         amenity = Amenity(**data)
         self.amenity_repo.add(amenity)
@@ -46,9 +70,8 @@ class HBnBFacade:
         self.amenity_repo.update(amenity_id, data)
         return self.get_amenity(amenity_id)
 
-#--------------------------------------------------
+    # ===== REVIEWS =====
     def create_review(self, review_data):
-
         user = self.get_user(review_data['user_id'])
         place = self.get_place(review_data['place_id'])
 
@@ -63,9 +86,6 @@ class HBnBFacade:
         )
 
         self.review_repo.add(new_review)
-        if hasattr(place, 'add_review'): 
-            place.add_review(new_review)
-
         return new_review
 
     def get_review(self, review_id):
@@ -82,8 +102,7 @@ class HBnBFacade:
         review.text = review_data.get('text', review.text)
         review.rating = review_data.get('rating', review.rating)
 
-        update_data = {"text": review.text, "rating": review.rating}
-        self.review_repo.update(review_id, update_data)
+        self.review_repo.update(review_id, review_data)
         return self.get_review(review_id)
 
     def delete_review(self, review_id):
@@ -93,7 +112,5 @@ class HBnBFacade:
 
         self.review_repo.delete(review_id)
 
-        if review.place and review in review.place.reviews:
-            review.place.reviews.remove(review)
 
 facade = HBnBFacade()
