@@ -132,3 +132,4 @@ class PlaceList(Resource):
             return updated.to_dict(), 200
         except ValueError as e:
             return {"error": str(e)}, 400
+
