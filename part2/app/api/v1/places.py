@@ -108,3 +108,27 @@ class PlaceList(Resource):
         """Retrieve a list of all places"""
         places = facade.get_all_places()
         return [p.to_dict() for p in places], 200
+    
+    @api.response(200, 'Place details retrieved successfully')
+    @api.response(404, 'Place not found')
+    def get(self, place_id):
+        """Retrieve a place by ID"""
+        place = facade.get_place(place_id)
+        if not place:
+            return {"error": "Place not found"}, 404
+        return place.to_dict(), 200
+    
+    @api.expect(place_model)
+    @api.response(200, 'Place updated successfully')
+    @api.response(404, 'Place not found')
+    @api.response(400, 'Invalid input data')
+    def put(self, place_id):
+        """Update an existing place"""
+        data = request.json
+        try:
+            updated = facade.update_place(place_id, data)
+            if not updated:
+                return {"error": "Place not found"}, 404
+            return updated.to_dict(), 200
+        except ValueError as e:
+            return {"error": str(e)}, 400

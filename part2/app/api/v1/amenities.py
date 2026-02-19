@@ -1,7 +1,7 @@
 from flask import request
 from flask_restx import Namespace, Resource, fields
 from app.models.amenity import Amenity
-from app.services.facade import HBnBFacade
+from app.services.facade import facade
 
 api = Namespace('amenities', description='Amenity operations')
 
@@ -18,14 +18,14 @@ class AmenityList(Resource):
     def post(self):
         data = request.json
         try:
-            amenity = HBnBFacade.create_amenity(data)
+            amenity = facade.create_amenity(data)
             return amenity.to_dict(), 201
         except ValueError as e:
             return {"error": str(e)}, 400
 
     @api.response(200, 'List of amenities retrieved successfully')
     def get(self):
-        amenities = HBnBFacade.get_all_amenities()
+        amenities = facade.get_all_amenities()
         return [a.to_dict() for a in amenities], 200
 
 
@@ -35,7 +35,7 @@ class AmenityResource(Resource):
     @api.response(200, 'Amenity details retrieved successfully')
     @api.response(404, 'Amenity not found')
     def get(self, amenity_id):
-        amenity = HBnBFacade.get_amenity(amenity_id)
+        amenity = facade.get_amenity(amenity_id)
         if not amenity:
             return {"error": "Amenity not found"}, 404
         return amenity.to_dict(), 200
@@ -47,7 +47,7 @@ class AmenityResource(Resource):
     def put(self, amenity_id):
         data = request.json
         try:
-            updated = HBnBFacade.update_amenity(amenity_id, data)
+            updated = facade.update_amenity(amenity_id, data)
             if not updated:
                 return {"error": "Amenity not found"}, 404
             return updated.to_dict(), 200
