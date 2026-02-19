@@ -1,6 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from flask import request
-from app import facade
+from app.services.facade import facade
 
 api = Namespace('reviews', description='Review operations')
 

@@ -63,7 +63,8 @@ class HBnBFacade:
         )
 
         self.review_repo.add(new_review)
-        place.add_review(new_review)
+        if hasattr(place, 'add_review'): 
+            place.add_review(new_review)
 
         return new_review
 
@@ -83,7 +84,7 @@ class HBnBFacade:
 
         update_data = {"text": review.text, "rating": review.rating}
         self.review_repo.update(review_id, update_data)
-        return review
+        return self.get_review(review_id)
 
     def delete_review(self, review_id):
         review = self.get_review(review_id)
@@ -92,5 +93,7 @@ class HBnBFacade:
 
         self.review_repo.delete(review_id)
 
-        if review in review.place.reviews:
+        if review.place and review in review.place.reviews:
             review.place.reviews.remove(review)
+
+facade = HBnBFacade()
