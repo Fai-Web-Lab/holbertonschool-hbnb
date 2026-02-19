@@ -54,3 +54,9 @@ class InMemoryRepository(Repository):
              if getattr(obj, attr_name) == attr_value),
             None
         )
+
+class AmenityRepository(InMemoryRepository):
+    pass
+
+class PlaceRepository(InMemoryRepository):
+    pass
