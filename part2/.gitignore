@@ -1,7 +1,0 @@
-#Virtual environment
-venv/
-.env/
-.venv/
-ENV/
-env/
-part1/1.txt
