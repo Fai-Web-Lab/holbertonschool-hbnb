@@ -40,7 +40,7 @@ place_model = api.model(
         'price': fields.Float(required=True),
         'latitude': fields.Float(required=True),
         'longitude': fields.Float(required=True),
-        'owner_id': fields.String(required=True),
+        'owner_id': fields.String(required=False),
         'amenities': fields.List(fields.String, required=False)
     }
 )
@@ -57,7 +57,7 @@ class PlaceList(Resource):
             place = facade.create_place(data)
         except ValueError as e:
             return {"error": str(e)}, 400
-
+        print("Received:", data)
         return {
             "id": place.id,
             "title": place.title,

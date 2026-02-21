@@ -29,8 +29,8 @@ class Place(BaseModel):
         if longitude is None or not (-180 <= longitude <= 180):
             raise ValueError("Longitude must be between -180 and 180")
 
-        if not owner_id:
-            raise ValueError("Owner ID is required")
+        if owner_id is None:
+            owner_id = ""
 
         self.title = title
         self.description = description
