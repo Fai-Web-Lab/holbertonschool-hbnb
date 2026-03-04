@@ -40,13 +40,20 @@ class HBnBFacade:
 
     # ===== PLACES =====
     def create_place(self, place_data):
+
+        owner_id = place_data.get("owner_id")
+        owner = self.get_user(owner_id)
+        if not owner:
+            raise ValueError("Invalid owner_id: user does not exist")
+
         amenity_ids = place_data.get("amenities", [])
         amenities = []
 
         for amenity_id in amenity_ids:
             amenity = self.get_amenity(amenity_id)
-            if amenity:
-                amenities.append(amenity)
+            if not amenity:
+                raise ValueError(f"Invalid amenity_id: {amenity_id}")
+            amenities.append(amenity)
 
         place = Place(
             title=place_data["title"],
@@ -54,7 +61,7 @@ class HBnBFacade:
             price=place_data["price"],
             latitude=place_data["latitude"],
             longitude=place_data["longitude"],
-            owner_id = place_data.get("owner_id"),
+            owner_id = owner_id,
             amenities=amenities,
         )
 
@@ -67,9 +74,46 @@ class HBnBFacade:
     def get_all_places(self):
         return self.place_repo.get_all()
 
-    def update_place(self, place_id, data):
-        self.place_repo.update(place_id, data)
-        return self.get_place(place_id)
+    def update_place(self, place_id, place_data):
+        place = self.get_place(place_id)
+        if not place:
+            raise ValueError("Place not found")
+        if "owner_id" in place_data:
+            owner = self.get_user(place_data["owner_id"])
+            if not owner:
+                raise ValueError("Invalid owner_id: user does not exist")
+            place.owner_id = place_data["owner_id"]
+
+        if "amenities" in place_data:
+            amenity_ids = place_data.get("amenities", [])
+            amenities = []
+
+            for amenity_id in amenity_ids:
+                amenity = self.get_amenity(amenity_id)
+                if not amenity:
+                    raise ValueError(f"Invalid amenity_id: {amenity_id}")
+                amenities.append(amenity)
+
+            place.amenities = amenities
+
+        if "title" in place_data:
+            place.title = place_data["title"]
+
+        if "description" in place_data:
+            place.description = place_data["description"]
+
+        if "price" in place_data:
+            place.price = place_data["price"]
+
+        if "latitude" in place_data:
+            place.latitude = place_data["latitude"]
+
+        if "longitude" in place_data:
+            place.longitude = place_data["longitude"]
+
+        self.place_repo.update(place_id, place_data)
+        return place
+
 
     def get_amenities_for_place(self, place_id):
         place = self.get_place(place_id)
@@ -101,15 +145,27 @@ class HBnBFacade:
 
     # ===== REVIEWS =====
     def create_review(self, review_data):
-        user = self.get_user(review_data["user_id"])
-        place = self.get_place(review_data["place_id"])
+        if "rating" not in review_data:
+            raise ValueError("rating is required")
 
-        if not user or not place:
-            raise ValueError("User or Place not found")
+        rating = review_data["rating"]
+        if not isinstance(rating, int) or rating < 1 or rating > 5:
+            raise ValueError("Rating must be an integer between 1 and 5")
+
+        if "text" not in review_data or not review_data["text"].strip():
+            raise ValueError("Review text cannot be empty")
+
+        user = self.get_user(review_data["user_id"])
+        if not user:
+            raise ValueError("User not found")
+
+        place = self.get_place(review_data["place_id"])
+        if not place:
+            raise ValueError("Place not found")
 
         new_review = Review(
             text=review_data["text"],
-            rating=review_data["rating"],
+            rating=rating,
             user_id=review_data["user_id"],
             place_id=review_data["place_id"],
         )
@@ -131,18 +187,33 @@ class HBnBFacade:
         if not review:
             raise ValueError("Review not found")
 
-        review.text = review_data.get("text", review.text)
-        review.rating = review_data.get("rating", review.rating)
+        if "text" in review_data:
+            text = review_data["text"]
+            if not text or not text.strip():
+                raise ValueError("Review text cannot be empty")
+            review.text = text
+
+        if "rating" in review_data:
+            rating = review_data["rating"]
+            if not isinstance(rating, int) or rating < 1 or rating > 5:
+                raise ValueError("Rating must be an integer between 1 and 5")
+            review.rating = rating
 
         self.review_repo.update(review_id, review_data)
-        return self.get_review(review_id)
+        return review
 
     def delete_review(self, review_id):
         review = self.get_review(review_id)
         if not review:
             raise ValueError("Review not found")
 
+        place = self.get_place(review.place_id)
+        if place and review in place.reviews:
+            place.reviews.remove(review)
+            self.place_repo.update(place.id, {"reviews": place.reviews})
+            
         self.review_repo.delete(review_id)
 
+        return True
 
 facade = HBnBFacade()
