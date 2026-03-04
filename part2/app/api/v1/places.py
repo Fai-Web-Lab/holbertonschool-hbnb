@@ -40,7 +40,7 @@ place_model = api.model(
         'price': fields.Float(required=True),
         'latitude': fields.Float(required=True),
         'longitude': fields.Float(required=True),
-        'owner_id': fields.String(required=False),
+        'owner_id': fields.String(required=True),
         'amenities': fields.List(fields.String, required=False)
     }
 )
@@ -137,7 +137,7 @@ class PlaceResource(Resource):
             ]
         }, 200
 
-    @api.expect(place_model, validate=True)
+    @api.expect(place_model)
     def put(self, place_id):
         data = request.json
 

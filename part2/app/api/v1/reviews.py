@@ -80,17 +80,22 @@ class ReviewResource(Resource):
     def put(self, review_id):
         data = request.json
 
-        updated_review = facade.update_review(review_id, data)
-        if not updated_review:
-            return {'error': 'Review not found'}, 404
+        try:
+            updated_review = facade.update_review(review_id, data)
+            return {'message': 'Review updated successfully'}, 200
 
-        return {'message': 'Review updated successfully'}, 200
+        except ValueError as e:
+            if "not found" in str(e).lower():
+                return {"error": "Review not found"}, 404
+
+            return {"error": str(e)}, 400
 
     @api.response(200, 'Review deleted successfully')
     @api.response(404, 'Review not found')
     def delete(self, review_id):
-        success = facade.delete_review(review_id)
-        if not success:
-            return {'error': 'Review not found'}, 404
+        try:
+            facade.delete_review(review_id)
+            return {"message": "Review deleted successfully"}, 200
 
-        return {'message': 'Review deleted successfully'}, 200
+        except ValueError:
+            return {"error": "Review not found"}, 404
