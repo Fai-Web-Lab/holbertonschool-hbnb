@@ -1,0 +1,1 @@
+#10 Documentation (0.5/1): The rubric asks for a README that includes “how to install dependencies and run the application” and “purpose of each directory.” The part2 folder has no README; the repo root README does not provide part2-specific run instructions or directory descriptions for the part2 layout.
