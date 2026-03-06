@@ -1,0 +1,173 @@
+from flask import request
+from flask_restx import Namespace, Resource, fields
+from app.services import facade
+
+api = Namespace('places', description='Place operations')
+
+amenity_model = api.model(
+    'PlaceAmenity',
+    {
+        'id': fields.String(description='Amenity ID'),
+        'name': fields.String(description='Name of the amenity')
+    }
+)
+
+user_model = api.model(
+    'PlaceUser',
+    {
+        'id': fields.String(description='User ID'),
+        'first_name': fields.String(description='First name'),
+        'last_name': fields.String(description='Last name'),
+        'email': fields.String(description='Email')
+    }
+)
+
+review_model = api.model(
+    'PlaceReview',
+    {
+        'id': fields.String(description='Review ID'),
+        'text': fields.String(description='Review text'),
+        'rating': fields.Integer(description='Rating'),
+        'user_id': fields.String(description='User ID')
+    }
+)
+
+place_model = api.model(
+    'Place',
+    {
+        'title': fields.String(required=True),
+        'description': fields.String(),
+        'price': fields.Float(required=True),
+        'latitude': fields.Float(required=True),
+        'longitude': fields.Float(required=True),
+        'owner_id': fields.String(required=True),
+        'amenities': fields.List(fields.String, required=False)
+    }
+)
+
+
+@api.route('/')
+class PlaceList(Resource):
+
+    @api.expect(place_model, validate=True)
+    def post(self):
+        data = request.json
+
+        try:
+            place = facade.create_place(data)
+        except ValueError as e:
+            return {"error": str(e)}, 400
+        print("Received:", data)
+        return {
+            "id": place.id,
+            "title": place.title,
+            "description": place.description,
+            "price": place.price,
+            "latitude": place.latitude,
+            "longitude": place.longitude,
+            "owner_id": place.owner_id
+        }, 201
+
+    def get(self):
+        places = facade.get_all_places()
+
+        return [
+            {
+                "id": p.id,
+                "title": p.title,
+                "description": p.description,
+                "price": p.price,
+                "latitude": p.latitude,
+                "longitude": p.longitude,
+                "owner_id": p.owner_id
+            }
+            for p in places
+        ], 200
+
+
+@api.route('/<string:place_id>')
+class PlaceResource(Resource):
+
+    def get(self, place_id):
+        place = facade.get_place(place_id)
+        if not place:
+            return {"error": "Place not found"}, 404
+
+        owner = facade.get_user(place.owner_id)
+        
+        amenities = []
+        for a in place.amenities:
+            if isinstance(a, str):
+                amenity_obj = facade.get_amenity(a)
+                if amenity_obj:
+                    amenities.append(amenity_obj)
+            else:
+                amenities.append(a)
+
+        reviews = facade.get_reviews_for_place(place.id)
+
+        return {
+            "id": place.id,
+            "title": place.title,
+            "description": place.description,
+            "price": place.price,
+            "latitude": place.latitude,
+            "longitude": place.longitude,
+            "owner": {
+                "id": owner.id,
+                "first_name": owner.first_name,
+                "last_name": owner.last_name,
+                "email": owner.email
+            } if owner else None,
+            "amenities": [
+                {
+                    "id": am.id,
+                    "name": am.name
+                }
+                for am in amenities
+            ],
+            "reviews": [
+                {
+                    "id": r.id,
+                    "text": r.text,
+                    "rating": r.rating,
+                    "user_id": r.user_id
+                }
+                for r in reviews
+            ]
+        }, 200
+
+    @api.expect(place_model)
+    def put(self, place_id):
+        data = request.json
+
+        try:
+            updated = facade.update_place(place_id, data)
+        except ValueError as e:
+            return {"error": str(e)}, 400
+
+        if not updated:
+            return {"error": "Place not found"}, 404
+
+        return {"message": "Place updated successfully"}, 200
+
+
+@api.route('/<string:place_id>/reviews')
+class PlaceReviewList(Resource):
+
+    def get(self, place_id):
+        place = facade.get_place(place_id)
+        if not place:
+            return {'error': 'Place not found'}, 404
+
+        reviews = facade.get_reviews_for_place(place_id)
+
+        return [
+            {
+                'id': r.id,
+                'text': r.text,
+                'rating': r.rating,
+                'user_id': r.user_id
+            }
+            for r in reviews
+        ], 200
