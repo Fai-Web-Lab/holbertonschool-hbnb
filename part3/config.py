@@ -5,7 +5,7 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key")
     DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "jwt-secret")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "super-secret-key")
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
 
 class DevelopmentConfig(Config):
