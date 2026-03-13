@@ -14,7 +14,8 @@ user_model = api.model('User', {
 update_user_model = api.model('UpdateUser', {
     'first_name': fields.String(),
     'last_name': fields.String(),
-    'email': fields.String()
+    'email': fields.String(),
+    'password': fields.String()
 })
 
 
@@ -22,8 +23,13 @@ update_user_model = api.model('UpdateUser', {
 class UserList(Resource):
 
     @api.expect(user_model, validate=True)
+    @jwt_required()
     def post(self):
-        """Register a new user"""
+        """Create a new user - admin only"""
+        claims = get_jwt()
+        if not claims.get('is_admin', False):
+            return {"error": "Admin privileges required"}, 403
+
         user_data = api.payload
 
         try:
@@ -55,19 +61,25 @@ class UserResource(Resource):
     @api.expect(update_user_model, validate=True)
     @jwt_required()
     def put(self, user_id):
-        """Update user profile - only the user themselves can modify their data"""
-        # Get authenticated user's ID from JWT token
+        """Update user - regular users modify own data, admin can modify anyone"""
         current_user_id = get_jwt_identity()
-
-        # Ensure user can only update their own profile
-        if current_user_id != user_id:
-            return {"error": "Unauthorized action"}, 403
-
+        claims = get_jwt()
+        is_admin = claims.get('is_admin', False)
         data = api.payload
 
-        # Block email and password changes for regular users
-        if 'email' in data or 'password' in data:
+        # Regular user: can only update their own profile
+        if not is_admin and current_user_id != user_id:
+            return {"error": "Unauthorized action"}, 403
+
+        # Regular user: cannot change email or password
+        if not is_admin and ('email' in data or 'password' in data):
             return {"error": "You cannot modify email or password"}, 400
+
+        # Admin: check email uniqueness if changing email
+        if is_admin and 'email' in data:
+            existing = facade.get_user_by_email(data['email'])
+            if existing and existing.id != user_id:
+                return {"error": "Email already in use"}, 409
 
         try:
             updated_user = facade.update_user(user_id, data)
