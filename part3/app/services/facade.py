@@ -3,40 +3,49 @@ from app.models.amenity import Amenity
 from app.models.place import Place
 from app.models.review import Review
 from app.persistence.sqlalchemy_repository import SQLAlchemyRepository
+from persistence import UserRepository
 
 
 class HBnBFacade:
     def __init__(self):
-        self.user_repo = SQLAlchemyRepository(User)
+        self.user_repo = UserRepository()
         self.place_repo = SQLAlchemyRepository(Place)
         self.review_repo = SQLAlchemyRepository(Review)
         self.amenity_repo = SQLAlchemyRepository(Amenity)
 
     # ===== USERS =====
     def create_user(self, user_data):
-        existing_user = self.get_user_by_email(user_data["email"])
-        if existing_user:
-            raise ValueError("Email already registered")
-
-        user = User(**user_data)
-        self.user_repo.add(user)
+        user, error = self.user_repo.create_user(user_data)
+        if error:
+            raise ValueError(error)
         return user
 
     def get_user(self, user_id):
         return self.user_repo.get(user_id)
 
     def get_user_by_email(self, email):
-        return self.user_repo.get_by_attribute("email", email)
+        return self.user_repo.get_user_by_email(email)
 
     def get_all_users(self):
         return self.user_repo.get_all()
 
     def update_user(self, user_id, data):
-        user = self.get_user(user_id)
-        if not user:
-            return None
-        self.user_repo.update(user_id, data)
-        return self.get_user(user_id)
+        user, error = self.user_repo.update_user(user_id, data)
+        if error:
+            raise ValueError(error)
+        return user
+    
+    def delete_user(self, user_id):
+        success, message = self.user_repo.delete_user(user_id)
+        if not success:
+            raise ValueError(message)
+        return True
+
+    def search_users(self, search_term):
+        return self.user_repo.search_users(search_term)
+
+    def get_admin_users(self):
+        return self.user_repo.get_admin_users()
 
     # ===== PLACES =====
     def create_place(self, place_data):
