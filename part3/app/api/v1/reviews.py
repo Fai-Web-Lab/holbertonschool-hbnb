@@ -26,21 +26,17 @@ class ReviewList(Resource):
     @jwt_required()
     def post(self):
         """Create a review - authenticated users only"""
-        # Get user_id from JWT token instead of request body
         current_user_id = get_jwt_identity()
         data = request.json
         data['user_id'] = current_user_id
 
-        # Check that the place exists
         place = facade.get_place(data.get('place_id'))
         if not place:
             return {'error': 'Place not found'}, 404
 
-        # Prevent owner from reviewing their own place
         if place.owner_id == current_user_id:
             return {'error': 'You cannot review your own place'}, 400
 
-        # Prevent duplicate reviews on the same place
         existing_reviews = facade.get_reviews_for_place(data['place_id'])
         for r in existing_reviews:
             if r.user_id == current_user_id:
@@ -99,15 +95,17 @@ class ReviewResource(Resource):
     @api.response(400, 'Invalid input data')
     @jwt_required()
     def put(self, review_id):
-        """Update a review - only the author can modify"""
+        """Update a review - author or admin can modify"""
         current_user_id = get_jwt_identity()
+        claims = get_jwt()
+        is_admin = claims.get('is_admin', False)
 
         review = facade.get_review(review_id)
         if not review:
             return {"error": "Review not found"}, 404
 
-        # Only the author can update their review
-        if review.user_id != current_user_id:
+        # Only author or admin can update
+        if not is_admin and review.user_id != current_user_id:
             return {"error": "Unauthorized action"}, 403
 
         data = request.json
@@ -122,15 +120,17 @@ class ReviewResource(Resource):
     @api.response(404, 'Review not found')
     @jwt_required()
     def delete(self, review_id):
-        """Delete a review - only the author can delete"""
+        """Delete a review - author or admin can delete"""
         current_user_id = get_jwt_identity()
+        claims = get_jwt()
+        is_admin = claims.get('is_admin', False)
 
         review = facade.get_review(review_id)
         if not review:
             return {"error": "Review not found"}, 404
 
-        # Only the author can delete their review
-        if review.user_id != current_user_id:
+        # Only author or admin can delete
+        if not is_admin and review.user_id != current_user_id:
             return {"error": "Unauthorized action"}, 403
 
         try:
