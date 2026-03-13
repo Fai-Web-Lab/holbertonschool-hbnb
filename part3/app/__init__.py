@@ -11,16 +11,29 @@ def create_app(config_class=config.DevelopmentConfig):
 
     app.config.from_object('config.Config')
     app.config.from_pyfile("config.py", silent=True)
+    app.config['PROPAGATE_EXCEPTIONS'] = True
 
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
     bcrypt.init_app(app)
 
+    @jwt.unauthorized_loader
+    def unauthorized_callback(error_string):
+        return {"error": "Missing Authorization Header"}, 401
+
+    @jwt.invalid_token_loader
+    def invalid_token_callback(error_string):
+        return {"error": "Invalid token"}, 401
+
+    @jwt.expired_token_loader
+    def expired_token_callback(jwt_header, jwt_payload):
+        return {"error": "Token has expired"}, 401
+
     api = Api(
-        app, 
-        version='1.0', 
-        title='HBnB API', 
+        app,
+        version='1.0',
+        title='HBnB API',
         description='HBnB Application API with JWT Authentication',
         doc='/api/v1/'
     )
