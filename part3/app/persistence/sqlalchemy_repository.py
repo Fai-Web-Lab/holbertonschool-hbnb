@@ -2,9 +2,8 @@
 SQLAlchemy repository implementation for database persistence.
 """
 
-from abc import ABC, abstractmethod
-from app.persistence.repository import Repository
-from app.extensions import db
+from .repository import Repository
+from app import db
 
 
 class SQLAlchemyRepository(Repository):
