@@ -3,7 +3,7 @@ from app.models.amenity import Amenity
 from app.models.place import Place
 from app.models.review import Review
 from app.persistence.sqlalchemy_repository import SQLAlchemyRepository
-from persistence import UserRepository
+from app.persistence import UserRepository
 
 
 class HBnBFacade:
