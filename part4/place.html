@@ -3,27 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Place Details</title>
+    <title>HBnB - Place Details</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="images/logo.png" alt="HBnB Logo" class="logo">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="login.html" class="login-button">Login</a>
+            </div>
+        </nav>
+    </header>
+
     <main>
-        <section id="place-details">
-            <!-- Place details will be populated dynamically -->
+        <section class="place-details">
+            <div class="place-info">
+                <h1>Beautiful Apartment</h1>
+                <p><strong>Host:</strong> John Doe</p>
+                <p><strong>Price per night:</strong> $100</p>
+                <p><strong>Description:</strong> This is a wonderful place to stay, located in the heart of the city with amazing views and modern amenities.</p>
+                <p><strong>Amenities:</strong> WiFi, Kitchen, Air Conditioning, Free Parking</p>
+            </div>
         </section>
+
         <section id="reviews">
-            <!-- Reviews will be populated dynamically -->
+            <h3>Reviews</h3>
+            
+            <article class="review-card">
+                <p><strong>User:</strong> Alice Johnson</p>
+                <p><strong>Rating:</strong> ★★★★★</p>
+                <p class="comment">"The stay was perfect! Highly recommended for anyone visiting the area."</p>
+            </article>
+
+            <article class="review-card">
+                <p><strong>User:</strong> Bob Smith</p>
+                <p><strong>Rating:</strong> ★★★★☆</p>
+                <p class="comment">"Very clean and comfortable. Great communication with the host."</p>
+            </article>
         </section>
-        <section id="add-review">
+
+        <section id="add-review" class="add-review">
             <h2>Add a Review</h2>
-            <form id="review-form">
-                <label for="review-text">Review:</label>
+            <a href="add_review.html" class="details-button">Write a Review</a>
+            
+            <form id="review-form" class="form" style="display:none;">
+                <label for="review-text">Your Review:</label>
                 <textarea id="review-text" name="review-text" required></textarea>
-                
-                <button type="submit">Submit</button>
+                <button type="submit" class="submit-button">Submit Review</button>
             </form>
         </section>
     </main>
+
+    <footer>
+        <p>© 2026 Holberton School - All rights reserved.</p>
+    </footer>
+
     <script src="scripts.js"></script>
 </body>
 </html>
