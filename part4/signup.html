@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HBnB - Login</title>
+    <title>HBnB - Sign Up</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,32 +14,37 @@
             </div>
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="login.html" class="login-button" id="login-link">Login</a>
+                <a href="login.html" class="login-button">Login</a>
             </div>
         </nav>
     </header>
 
     <main>
         <section class="login-container">
-            <form id="login-form" class="form">
-                <h2>Login</h2>
+            <form id="signup-form" class="form">
+                <h2>Create Account</h2>
                 
                 <div id="error-message" style="color: #ff5a5f; background-color: #ffecec; padding: 10px; border-radius: 4px; margin-bottom: 15px; display: none; text-align: center; font-size: 14px; border: 1px solid #ff5a5f;"></div>
 
                 <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" placeholder="Enter your first name" required>
+                </div>
+
+                <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <input type="email" id="email" placeholder="Enter your email" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <input type="password" id="password" placeholder="Create a password" required>
                 </div>
                 
-                <button type="submit" class="submit-button">Login</button>
+                <button type="submit" class="submit-button">Sign Up</button>
 
                 <p style="text-align: center; margin-top: 20px; font-size: 14px;">
-                    Don't have an account? <a href="signup.html" style="color: #ff5a5f; text-decoration: none; font-weight: bold;">Sign up here</a>
+                    Already have an account? <a href="login.html" style="color: #ff5a5f; text-decoration: none; font-weight: bold;">Login here</a>
                 </p>
             </form>
         </section>

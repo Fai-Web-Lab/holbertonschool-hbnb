@@ -64,6 +64,20 @@ main {
     width: 100%;
 }
 
+/* تنسيق رسالة الخطأ الجديدة */
+#error-message {
+    color: #ff5a5f;
+    background-color: #ffecec;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: none;
+    text-align: center;
+    border: 1px solid #ff5a5f;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
 .place-card, .review-card {
     margin: 20px;
     padding: 10px;
@@ -107,6 +121,8 @@ main {
     font-size: 1rem;
     margin-top: 10px;
     text-align: center;
+    transition: background-color 0.3s;
+    width: 100%; /* جعل الزر يأخذ العرض الكامل في النماذج */
 }
 
 .details-button:hover, .submit-button:hover {
@@ -115,11 +131,18 @@ main {
 
 .form {
     max-width: 400px;
-    margin: 0 auto;
+    margin: 40px auto; /* إضافة مسافة عمودية */
     background: white;
     padding: 2rem;
     border-radius: 10px;
     border: 1px solid #ddd;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* إضافة ظل خفيف */
+}
+
+.form h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
 }
 
 .form-group {
@@ -134,9 +157,16 @@ main {
 
 .form input, .form select, .form textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form input:focus {
+    border-color: #ff5a5f;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 90, 95, 0.2);
 }
 
 footer {
@@ -156,5 +186,8 @@ footer {
     }
     .nav-links a {
         margin: 0 10px;
+    }
+    .form {
+        max-width: 90%;
     }
 }

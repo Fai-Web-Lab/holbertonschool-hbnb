@@ -14,7 +14,7 @@
             </div>
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="login.html" class="login-button">Login</a>
+                <a href="login.html" id="login-link" class="login-button">Login</a>
             </div>
         </nav>
     </header>
@@ -22,13 +22,11 @@
     <main>
         <section class="add-review">
             <form id="review-form" class="form">
-                <h2>Add a Review for Beautiful Apartment</h2>
+                <h2 id="place-name-header">Add a Review</h2>
                 
-                <input type="hidden" id="place-id" name="place-id" value="">
-
                 <div class="form-group">
-                    <label for="review">Your Review:</label>
-                    <textarea id="review" name="review" placeholder="Write your experience here..." required></textarea>
+                    <label for="review-text">Your Review:</label>
+                    <textarea id="review-text" name="review" placeholder="Write your experience here..." required></textarea>
                 </div>
                 
                 <div class="form-group">

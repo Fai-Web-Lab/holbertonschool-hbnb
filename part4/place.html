@@ -14,43 +14,31 @@
             </div>
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="login.html" class="login-button">Login</a>
+                <a href="login.html" id="login-link" class="login-button">Login</a>
             </div>
         </nav>
     </header>
 
     <main>
-        <section class="place-details">
+        <section id="place-details" class="place-details">
             <div class="place-info">
-                <h1>Beautiful Apartment</h1>
-                <p><strong>Host:</strong> John Doe</p>
-                <p><strong>Price per night:</strong> $100</p>
-                <p><strong>Description:</strong> This is a wonderful place to stay, located in the heart of the city with amazing views and modern amenities.</p>
-                <p><strong>Amenities:</strong> WiFi, Kitchen, Air Conditioning, Free Parking</p>
+                <h1 id="place-name">Loading...</h1>
+                <p><strong>Host:</strong> <span id="place-host"></span></p>
+                <p><strong>Price per night:</strong> $<span id="place-price"></span></p>
+                <p><strong>Description:</strong> <span id="place-description"></span></p>
+                <p><strong>Amenities:</strong> <span id="place-amenities"></span></p>
             </div>
         </section>
 
         <section id="reviews">
             <h3>Reviews</h3>
-            
-            <article class="review-card">
-                <p><strong>User:</strong> Alice Johnson</p>
-                <p><strong>Rating:</strong> ★★★★★</p>
-                <p class="comment">"The stay was perfect! Highly recommended for anyone visiting the area."</p>
-            </article>
-
-            <article class="review-card">
-                <p><strong>User:</strong> Bob Smith</p>
-                <p><strong>Rating:</strong> ★★★★☆</p>
-                <p class="comment">"Very clean and comfortable. Great communication with the host."</p>
-            </article>
+            <div id="reviews-list">
+            </div>
         </section>
 
-        <section id="add-review" class="add-review">
+        <section id="add-review" class="add-review" style="display: none;">
             <h2>Add a Review</h2>
-            <a href="add_review.html" class="details-button">Write a Review</a>
-            
-            <form id="review-form" class="form" style="display:none;">
+            <form id="review-form" class="form">
                 <label for="review-text">Your Review:</label>
                 <textarea id="review-text" name="review-text" required></textarea>
                 <button type="submit" class="submit-button">Submit Review</button>
