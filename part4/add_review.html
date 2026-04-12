@@ -2,40 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HBnB - Add Review</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon.png">
 </head>
 <body>
     <header>
-        <a href="index.html">
-            <img src="logo.png" alt="HBnB Logo" class="logo">
-        </a>
+        <img src="logo.png" alt="HBnB Logo" class="logo">
         <nav>
-            <a href="index.html" class="login-button">Home</a>
+            <a href="index.html" style="margin-right: 15px; text-decoration: none; color: #333;">Home</a>
+            <a href="login.html" class="login-button" id="login-link">Login</a>
         </nav>
     </header>
     <main>
-        <section class="form add-review">
+        <section class="form-section" style="max-width: 600px; margin: 40px auto; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 10px;">
             <h2>Add a Review</h2>
-            <form action="#" method="POST">
-                <label for="rating">Rating (1-5):</label>
-                <select id="rating" name="rating" required>
-                    <option value="5">5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                </select>
-                <label for="comment">Your Comment:</label>
-                <textarea id="comment" name="comment" rows="5" required></textarea>
-                <button type="submit">Submit Review</button>
+            <form id="review-form">
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <label for="review-text" style="display: block; margin-bottom: 5px;">Your Review:</label>
+                    <textarea id="review-text" rows="5" required style="width: 100%; border-radius: 5px; border: 1px solid #ddd; padding: 10px; font-family: inherit;"></textarea>
+                </div>
+                <button type="submit" class="login-button" style="border: none; cursor: pointer;">Submit Review</button>
             </form>
         </section>
     </main>
     <footer>
-        <p>&copy; 2026 HBnB. All rights reserved.</p>
+        <p>© 2026 HBnB. All rights reserved.</p>
     </footer>
+    <script src="scripts.js"></script>
 </body>
 </html>

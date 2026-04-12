@@ -1,15 +1,63 @@
-body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #ffffff; border-bottom: 1px solid #ddd; }
-.logo { height: 40px; }
-.login-button { text-decoration: none; color: #ff5a5f; font-weight: bold; border: 1px solid #ff5a5f; padding: 8px 15px; border-radius: 5px; }
-footer { text-align: center; padding: 15px; background-color: #ffffff; border-top: 1px solid #ddd; position: fixed; bottom: 0; width: 100%; }
-.place-card, .review-card { margin: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 10px; background-color: #ffffff; }
-.places-list { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; margin-bottom: 60px; }
-.details-button { display: inline-block; margin-top: 10px; padding: 8px 12px; background-color: #ff5a5f; color: white; text-decoration: none; border-radius: 5px; }
-.place-details { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 80px; }
-.place-info { margin-bottom: 20px; }
-.form { max-width: 400px; margin: 50px auto; padding: 20px; background: white; border-radius: 10px; border: 1px solid #ddd; }
-.form h2 { text-align: center; }
-.form input, .form textarea, .form select { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px; }
-.form button { width: 100%; padding: 10px; background-color: #ff5a5f; color: white; border: none; border-radius: 5px; font-size: 16px; }
-.add-review { margin-top: 20px; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+header {
+    background-color: #fff;
+    padding: 15px 30px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    height: 50px;
+}
+.login-button, .details-button {
+    background-color: #ff5a5f;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+.controls {
+    text-align: center;
+    margin: 20px 0;
+}
+.controls select {
+    padding: 8px 15px;
+    font-size: 1em;
+    border-radius: 5px;
+    margin-left: 10px;
+    border: 1px solid #ddd;
+}
+.places-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    padding: 20px 5%;
+}
+.place-card, .review-card {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: white;
+}
+.place-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.place-card h3 {
+    margin: 15px 0 5px 0;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #ddd;
+}
