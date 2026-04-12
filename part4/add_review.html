@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - Add Review</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="icon.png">
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img src="logo.png" alt="HBnB Logo" class="logo">
+        </a>
+        <nav>
+            <a href="index.html" class="login-button">Home</a>
+        </nav>
+    </header>
+    <main>
+        <section class="form add-review">
+            <h2>Add a Review</h2>
+            <form action="#" method="POST">
+                <label for="rating">Rating (1-5):</label>
+                <select id="rating" name="rating" required>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+                <label for="comment">Your Comment:</label>
+                <textarea id="comment" name="comment" rows="5" required></textarea>
+                <button type="submit">Submit Review</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 HBnB. All rights reserved.</p>
+    </footer>
+</body>
+</html>
