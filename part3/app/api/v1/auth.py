@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import create_access_token
-from app.services import facade
+from app.models.user import User
+from flask import request
 
 auth_ns = Namespace('auth', description='Authentication operations')
 
@@ -11,16 +12,19 @@ login_model = auth_ns.model('Login', {
 
 @auth_ns.route('/login')
 class LoginResource(Resource):
-    @auth_ns.expect(login_model, validate=True)
     def post(self):
-        login_data = auth_ns.payload
-        user = facade.get_user_by_email(login_data['email'])
+        data = request.get_json()
+        print(f"DEBUG: Received data: {data}")
         
-        if user and user.verify_password(login_data['password']):
-            access_token = create_access_token(
-                identity=str(user.id), 
-                additional_claims={'is_admin': user.is_admin}
-            )
-            return {'access_token': access_token}, 200
+        email = data.get('email')
+        password = data.get('password')
         
-        return {'error': 'Invalid email or password'}, 401
+        user = User.query.filter_by(email=email).first()
+        
+        if user:
+            print(f"DEBUG: User found in DB. DB Password: {user.password} | Sent Password: {password}")
+            if user.password == password:
+                access_token = create_access_token(identity={'email': user.email})
+                return {'access_token': access_token}, 200
+        
+        return {'msg': 'Invalid credentials'}, 401
