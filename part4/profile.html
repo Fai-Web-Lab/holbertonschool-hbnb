@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HBnB - Add Review</title>
+    <title>HBnB - My Profile</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="icon.png">
 </head>
@@ -19,25 +19,24 @@
     </header>
     <main>
         <section class="form-section">
-            <h2>Add a Review</h2>
-            <form id="review-form">
+            <h2>My Profile</h2>
+            <div id="profile-info"></div>
+            <form id="profile-form">
                 <div class="input-group">
-                    <label>Your Rating:</label>
-                    <div class="star-rating" id="rating-input" data-value="0">
-                        <span data-value="1">★</span>
-                        <span data-value="2">★</span>
-                        <span data-value="3">★</span>
-                        <span data-value="4">★</span>
-                        <span data-value="5">★</span>
-                    </div>
-                    <input type="hidden" id="review-rating" required>
+                    <label for="profile-first-name">First name:</label>
+                    <input type="text" id="profile-first-name" required>
                 </div>
                 <div class="input-group">
-                    <label for="review-text">Your Review:</label>
-                    <textarea id="review-text" rows="5" required></textarea>
+                    <label for="profile-last-name">Last name:</label>
+                    <input type="text" id="profile-last-name" required>
                 </div>
-                <button type="submit" class="login-button">Submit Review</button>
+                <button type="submit" class="login-button">Save Changes</button>
             </form>
+        </section>
+
+        <section>
+            <h2>My Places</h2>
+            <div class="places-grid" id="my-places-list"></div>
         </section>
     </main>
     <footer>

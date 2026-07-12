@@ -22,16 +22,40 @@ header {
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    display: inline-block;
+}
+.details-button.danger {
+    background-color: #6c757d;
+}
+nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+nav .nav-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+#login-link, #register-link, #logout-link, #profile-link, #add-place-link {
+    display: none;
 }
 .controls {
     text-align: center;
     margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
-.controls select {
+.controls select, .controls input[type="text"] {
     padding: 8px 15px;
     font-size: 1em;
     border-radius: 5px;
-    margin-left: 10px;
     border: 1px solid #ddd;
 }
 .places-grid {
@@ -54,6 +78,95 @@ header {
 }
 .place-card h3 {
     margin: 15px 0 5px 0;
+}
+.place-details {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.owner-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+.reviews {
+    margin-top: 30px;
+}
+.review-card {
+    max-width: 100%;
+}
+.review-stars {
+    color: #ff5a5f;
+    font-size: 1.2em;
+    margin: 0;
+}
+.review-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.review-actions textarea, .review-card textarea {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-family: inherit;
+    margin: 10px 0;
+}
+.form-section {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+.form-section .input-group {
+    margin-bottom: 15px;
+}
+.form-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.form-section input, .form-section textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 1em;
+}
+.form-footer-link {
+    margin-top: 15px;
+    text-align: center;
+}
+.star-rating {
+    display: inline-flex;
+    font-size: 2em;
+    cursor: pointer;
+}
+.star-rating span {
+    color: #ddd;
+}
+.star-rating span.filled {
+    color: #ff5a5f;
+}
+.amenities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.amenity-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: normal;
+    width: auto;
+}
+.amenity-option input {
+    width: auto;
 }
 footer {
     text-align: center;

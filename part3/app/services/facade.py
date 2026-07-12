@@ -120,9 +120,17 @@ class HBnBFacade:
         if "longitude" in place_data:
             place.longitude = place_data["longitude"]
 
-        self.place_repo.update(place_id, place_data)
+        place.save()
         return place
 
+
+    def delete_place(self, place_id):
+        place = self.get_place(place_id)
+        if not place:
+            raise ValueError("Place not found")
+
+        self.place_repo.delete(place_id)
+        return True
 
     def get_amenities_for_place(self, place_id):
         place = self.get_place(place_id)

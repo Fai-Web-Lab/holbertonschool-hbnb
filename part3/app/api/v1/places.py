@@ -113,6 +113,17 @@ class PlaceResource(Resource):
 
         reviews = facade.get_reviews_for_place(place.id)
 
+        def review_dict(r):
+            reviewer = facade.get_user(r.user_id)
+            return {
+                "id": r.id,
+                "text": r.text,
+                "rating": r.rating,
+                "user_id": r.user_id,
+                "reviewer_first_name": reviewer.first_name if reviewer else None,
+                "reviewer_last_name": reviewer.last_name if reviewer else None
+            }
+
         return {
             "id": place.id,
             "title": place.title,
@@ -130,10 +141,7 @@ class PlaceResource(Resource):
                 {"id": am.id, "name": am.name}
                 for am in amenities
             ],
-            "reviews": [
-                {"id": r.id, "text": r.text, "rating": r.rating, "user_id": r.user_id}
-                for r in reviews
-            ]
+            "reviews": [review_dict(r) for r in reviews]
         }, 200
 
     @api.expect(place_model)
@@ -160,6 +168,27 @@ class PlaceResource(Resource):
             return {"error": str(e)}, 400
 
         return {"message": "Place updated successfully"}, 200
+
+    @jwt_required()
+    def delete(self, place_id):
+        """Delete a place - owner or admin can delete"""
+        current_user_id = get_jwt_identity()
+        claims = get_jwt()
+        is_admin = claims.get('is_admin', False)
+
+        place = facade.get_place(place_id)
+        if not place:
+            return {"error": "Place not found"}, 404
+
+        if not is_admin and place.owner_id != current_user_id:
+            return {"error": "Unauthorized action"}, 403
+
+        try:
+            facade.delete_place(place_id)
+        except ValueError as e:
+            return {"error": str(e)}, 404
+
+        return {"message": "Place deleted successfully"}, 200
 
 
 @api.route('/<string:place_id>/reviews')

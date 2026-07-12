@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <title>HBnB - Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="icon.png">
 </head>
 <body>
     <header>
-        <img src="logo.png" alt="HBnB Logo" class="logo">
+        <a href="index.html"><img src="logo.png" alt="HBnB Logo" class="logo"></a>
+        <nav>
+            <a href="place_form.html" class="nav-link" id="add-place-link">Add Place</a>
+            <a href="profile.html" class="nav-link" id="profile-link">My Profile</a>
+            <a href="register.html" class="login-button" id="register-link">Sign Up</a>
+            <a href="login.html" class="login-button" id="login-link">Login</a>
+            <a href="#" class="login-button" id="logout-link">Logout</a>
+        </nav>
     </header>
     <main>
         <section class="form-section">
@@ -23,6 +31,7 @@
                 </div>
                 <button type="submit" class="login-button">Login</button>
             </form>
+            <p class="form-footer-link">No account? <a href="register.html">Sign up</a></p>
         </section>
     </main>
     <script src="scripts.js"></script>
